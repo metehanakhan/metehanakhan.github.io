@@ -1,0 +1,13 @@
+{
+  "name": "Hohla",
+  "short_name": "Hohla",
+  "description": "İkinizin arasındaki cam.",
+  "lang": "tr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0F1F26",
+  "theme_color": "#0F1F26",
+  "icons": [{ "src": "/icon-512.png", "sizes": "1024x1024", "type": "image/png", "purpose": "any maskable" }]
+}
