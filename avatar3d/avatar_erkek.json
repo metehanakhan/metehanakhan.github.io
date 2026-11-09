@@ -1,0 +1,1125 @@
+{
+ "beden": "erkek",
+ "glb": "avatar_erkek.glb",
+ "kaydiricilar": [
+  {
+   "id": "gozBoyu",
+   "ad": "Göz boyu"
+  },
+  {
+   "id": "gozAciklik",
+   "ad": "Göz açıklığı"
+  },
+  {
+   "id": "gozKose",
+   "ad": "Göz köşesi"
+  },
+  {
+   "id": "gozAralik",
+   "ad": "Göz aralığı"
+  },
+  {
+   "id": "kasYukseklik",
+   "ad": "Kaş yüksekliği"
+  },
+  {
+   "id": "kasAci",
+   "ad": "Kaş açısı"
+  },
+  {
+   "id": "burunEn",
+   "ad": "Burun genişliği"
+  },
+  {
+   "id": "burunBoy",
+   "ad": "Burun uzunluğu"
+  },
+  {
+   "id": "burunUcu",
+   "ad": "Burun ucu"
+  },
+  {
+   "id": "burunKemer",
+   "ad": "Burun kemeri"
+  },
+  {
+   "id": "burunKanat",
+   "ad": "Burun kanadı"
+  },
+  {
+   "id": "dudakUst",
+   "ad": "Üst dudak"
+  },
+  {
+   "id": "dudakAlt",
+   "ad": "Alt dudak"
+  },
+  {
+   "id": "agizEn",
+   "ad": "Ağız genişliği"
+  },
+  {
+   "id": "agizKose",
+   "ad": "Dudak köşesi"
+  },
+  {
+   "id": "elmacik",
+   "ad": "Elmacık kemiği"
+  },
+  {
+   "id": "ceneEn",
+   "ad": "Çene genişliği"
+  },
+  {
+   "id": "ceneUc",
+   "ad": "Çene ucu"
+  },
+  {
+   "id": "yuzEn",
+   "ad": "Yüz genişliği"
+  }
+ ],
+ "ifadeler": [
+  "eyeBlinkLeft",
+  "eyeBlinkRight",
+  "mouthSmileLeft",
+  "mouthSmileRight",
+  "cheekSquintLeft",
+  "cheekSquintRight",
+  "jawOpen",
+  "browInnerUp"
+ ],
+ "bitler": {
+  "ust__tisort": 0,
+  "ust__polo": 1,
+  "ust__baskili": 2,
+  "ust__gomlek": 3,
+  "ust__kravatli": 4,
+  "ust__kapusonlu": 5,
+  "ust__triko": 6,
+  "ust__kazak": 7,
+  "ust__hirka": 8,
+  "ust__kaban": 9,
+  "ust__atlet": 10,
+  "ust__sporatlet": 11,
+  "ust__dar": 12,
+  "takim__gomlekkot": 13,
+  "takim__gunluk1": 14,
+  "takim__gunluk2": 15,
+  "takim__gunluk4": 16,
+  "takim__gunluk5": 17,
+  "takim__gunluk6": 18,
+  "takim__takim": 19,
+  "takim__is": 20,
+  "takim__kruvaze": 21,
+  "takim__lacivert": 22,
+  "takim__kravatlitakim": 23,
+  "takim__smokin": 24,
+  "takim__papyon": 25,
+  "alt__kargo": 26,
+  "alt__klasikkot": 27,
+  "alt__duzkot": 28,
+  "alt__ispanyol": 29,
+  "alt__kumas": 30,
+  "alt__zincirli": 31,
+  "alt__chino": 32,
+  "alt__rahatpantolon": 33,
+  "alt__sort": 34,
+  "alt__bermuda": 35,
+  "ayakkabi__klasik": 36,
+  "ayakkabi__loafer": 37,
+  "ayakkabi__spor": 38,
+  "ayakkabi__deri": 39,
+  "ayakkabi__bot": 40,
+  "ayakkabi__sneaker": 41,
+  "ayakkabi__rahat": 42,
+  "ayakkabi__kosu": 43,
+  "ayakkabi__tenis": 44,
+  "ayakkabi__oxford": 45,
+  "ayakkabi__ikirenk": 46,
+  "ayakkabi__biker": 47,
+  "ayakkabi__deribot": 48,
+  "ayakkabi__cizme": 49,
+  "ayakkabi__kisbot": 50,
+  "ayakkabi__gunluk5": 51,
+  "ayakkabi__gunluk6": 52,
+  "ust__blazer": 53,
+  "ust__kruvazeblazer": 54,
+  "ust__ceketkravat": 55
+ },
+ "sapkaBitler": {
+  "sapka__fotr": 0,
+  "sapka__kasket": 1
+ },
+ "parcalar": [
+  {
+   "kat": "sac",
+   "id": "daginikquiff",
+   "ad": "Dağınık quiff",
+   "mesh": "sac__daginikquiff",
+   "renk": "#3F2A0A",
+   "dosya": "sac/erkek_daginikquiff.glb"
+  },
+  {
+   "kat": "sac",
+   "id": "shag",
+   "ad": "Shag",
+   "mesh": "sac__shag",
+   "renk": "#B32756",
+   "dosya": "sac/erkek_shag.glb"
+  },
+  {
+   "kat": "sac",
+   "id": "geri",
+   "ad": "Geriye taralı",
+   "mesh": "sac__geri",
+   "renk": "#000000",
+   "dosya": "sac/erkek_geri.glb"
+  },
+  {
+   "kat": "sac",
+   "id": "perdelim",
+   "ad": "Perdeli",
+   "mesh": "sac__perdelim",
+   "renk": "#946A59",
+   "dosya": "sac/erkek_perdelim.glb"
+  },
+  {
+   "kat": "sakal",
+   "id": "dolgun",
+   "ad": "Dolgun sakal",
+   "mesh": "sakal__dolgun",
+   "renk": "#808080",
+   "dosya": "sac/erkek_sakal_dolgun.glb"
+  },
+  {
+   "kat": "sakal",
+   "id": "yanak",
+   "ad": "Bıyıksız sakal",
+   "mesh": "sakal__yanak",
+   "renk": "#2A2A29",
+   "dosya": "sac/erkek_sakal_yanak.glb"
+  },
+  {
+   "kat": "sakal",
+   "id": "daginik",
+   "ad": "Dağınık sakal",
+   "mesh": "sakal__daginik",
+   "renk": "#8C6151",
+   "dosya": "sac/erkek_sakal_daginik.glb"
+  },
+  {
+   "kat": "sakal",
+   "id": "cene",
+   "ad": "Çene hattı",
+   "mesh": "sakal__cene",
+   "renk": "#2E0800",
+   "dosya": "sac/erkek_sakal_cene.glb"
+  },
+  {
+   "kat": "biyik",
+   "id": "klasik",
+   "ad": "Klasik bıyık",
+   "mesh": "biyik__klasik",
+   "renk": "#292929",
+   "dosya": "sac/erkek_biyik_klasik.glb"
+  },
+  {
+   "kat": "biyik",
+   "id": "daginik",
+   "ad": "Dağınık bıyık",
+   "mesh": "biyik__daginik",
+   "renk": "#4B4339",
+   "dosya": "sac/erkek_biyik_daginik.glb"
+  },
+  {
+   "kat": "biyik",
+   "id": "dali",
+   "ad": "Dalí bıyık",
+   "mesh": "biyik__dali",
+   "renk": "#000000",
+   "dosya": "sac/erkek_biyik_dali.glb"
+  },
+  {
+   "kat": "ust",
+   "id": "tisort",
+   "ad": "Tişört",
+   "mesh": "ust__tisort",
+   "renk": "#A5A5A5",
+   "dosya": "sac/erkek_ust_tisort.glb"
+  },
+  {
+   "kat": "ust",
+   "id": "polo",
+   "ad": "Polo yaka",
+   "mesh": "ust__polo",
+   "renk": "#909090",
+   "dosya": "sac/erkek_ust_polo.glb"
+  },
+  {
+   "kat": "ust",
+   "id": "baskili",
+   "ad": "Baskılı tişört",
+   "mesh": "ust__baskili",
+   "renk": "#2E3440",
+   "dosya": "sac/erkek_ust_baskili.glb"
+  },
+  {
+   "kat": "ust",
+   "id": "gomlek",
+   "ad": "Gömlek",
+   "mesh": "ust__gomlek",
+   "renk": "#E9E6DF",
+   "dosya": "sac/erkek_ust_gomlek.glb"
+  },
+  {
+   "kat": "ust",
+   "id": "kravatli",
+   "ad": "Kravatlı gömlek",
+   "mesh": "ust__kravatli",
+   "renk": "#D6E2EE",
+   "dosya": "sac/erkek_ust_kravatli.glb"
+  },
+  {
+   "kat": "ust",
+   "id": "kapusonlu",
+   "ad": "Kapüşonlu",
+   "mesh": "ust__kapusonlu",
+   "renk": "#7A7F88",
+   "dosya": "sac/erkek_ust_kapusonlu.glb"
+  },
+  {
+   "kat": "ust",
+   "id": "triko",
+   "ad": "Triko kazak",
+   "mesh": "ust__triko",
+   "renk": "#CF8043",
+   "dosya": "sac/erkek_ust_triko.glb"
+  },
+  {
+   "kat": "ust",
+   "id": "kazak",
+   "ad": "Bordo kazak",
+   "mesh": "ust__kazak",
+   "renk": "#B4490B",
+   "dosya": "sac/erkek_ust_kazak.glb"
+  },
+  {
+   "kat": "ust",
+   "id": "hirka",
+   "ad": "Örgü hırka",
+   "mesh": "ust__hirka",
+   "renk": "#583A32",
+   "dosya": "sac/erkek_ust_hirka.glb"
+  },
+  {
+   "kat": "ust",
+   "id": "kaban",
+   "ad": "Kaban",
+   "mesh": "ust__kaban",
+   "renk": "#DBDBD9",
+   "dosya": "sac/erkek_ust_kaban.glb"
+  },
+  {
+   "kat": "ust",
+   "id": "atlet",
+   "ad": "Atlet",
+   "mesh": "ust__atlet",
+   "renk": "#5B5B5B",
+   "dosya": "sac/erkek_ust_atlet.glb"
+  },
+  {
+   "kat": "ust",
+   "id": "sporatlet",
+   "ad": "Spor atlet",
+   "mesh": "ust__sporatlet",
+   "renk": "#E6E6E6",
+   "dosya": "sac/erkek_ust_sporatlet.glb"
+  },
+  {
+   "kat": "ust",
+   "id": "dar",
+   "ad": "Dar tişört",
+   "mesh": "ust__dar",
+   "renk": "#5B5B5B",
+   "dosya": "sac/erkek_ust_dar.glb"
+  },
+  {
+   "kat": "takim",
+   "id": "gomlekkot",
+   "ad": "Gömlek ve kot",
+   "mesh": "takim__gomlekkot",
+   "renk": "#2D2D37",
+   "dosya": "sac/erkek_takim_gomlekkot.glb"
+  },
+  {
+   "kat": "takim",
+   "id": "gunluk1",
+   "ad": "Günlük 1",
+   "mesh": "takim__gunluk1",
+   "renk": "#3F4960",
+   "dosya": "sac/erkek_takim_gunluk1.glb"
+  },
+  {
+   "kat": "takim",
+   "id": "gunluk2",
+   "ad": "Günlük 2",
+   "mesh": "takim__gunluk2",
+   "renk": "#375A87",
+   "dosya": "sac/erkek_takim_gunluk2.glb"
+  },
+  {
+   "kat": "takim",
+   "id": "gunluk4",
+   "ad": "Günlük 3",
+   "mesh": "takim__gunluk4",
+   "renk": "#3F5F7B",
+   "dosya": "sac/erkek_takim_gunluk4.glb"
+  },
+  {
+   "kat": "takim",
+   "id": "gunluk5",
+   "ad": "Günlük 4",
+   "mesh": "takim__gunluk5",
+   "renk": "#1D2226",
+   "dosya": "sac/erkek_takim_gunluk5.glb"
+  },
+  {
+   "kat": "takim",
+   "id": "gunluk6",
+   "ad": "Günlük 5",
+   "mesh": "takim__gunluk6",
+   "renk": "#A8B0B8",
+   "dosya": "sac/erkek_takim_gunluk6.glb"
+  },
+  {
+   "kat": "takim",
+   "id": "takim",
+   "ad": "Takım elbise",
+   "mesh": "takim__takim",
+   "renk": "#272727",
+   "dosya": "sac/erkek_takim_takim.glb"
+  },
+  {
+   "kat": "takim",
+   "id": "is",
+   "ad": "İş tulumu",
+   "mesh": "takim__is",
+   "renk": "#415673",
+   "dosya": "sac/erkek_takim_is.glb"
+  },
+  {
+   "kat": "takim",
+   "id": "kruvaze",
+   "ad": "Kruvaze takım",
+   "mesh": "takim__kruvaze",
+   "renk": "#3F455C",
+   "dosya": "sac/erkek_takim_kruvaze.glb"
+  },
+  {
+   "kat": "takim",
+   "id": "lacivert",
+   "ad": "Lacivert takım",
+   "mesh": "takim__lacivert",
+   "renk": "#203047",
+   "dosya": "sac/erkek_takim_lacivert.glb"
+  },
+  {
+   "kat": "takim",
+   "id": "kravatlitakim",
+   "ad": "Kravatlı takım",
+   "mesh": "takim__kravatlitakim",
+   "renk": "#393326",
+   "dosya": "sac/erkek_takim_kravatlitakim.glb"
+  },
+  {
+   "kat": "takim",
+   "id": "smokin",
+   "ad": "Beyaz smokin",
+   "mesh": "takim__smokin",
+   "renk": "#62625F",
+   "dosya": "sac/erkek_takim_smokin.glb"
+  },
+  {
+   "kat": "takim",
+   "id": "papyon",
+   "ad": "Papyonlu takım",
+   "mesh": "takim__papyon",
+   "renk": "#46474A",
+   "dosya": "sac/erkek_takim_papyon.glb"
+  },
+  {
+   "kat": "alt",
+   "id": "kargo",
+   "ad": "Kargo pantolon",
+   "mesh": "alt__kargo",
+   "renk": "#5E5B45",
+   "dosya": "sac/erkek_alt_kargo.glb"
+  },
+  {
+   "kat": "alt",
+   "id": "klasikkot",
+   "ad": "Klasik kot",
+   "mesh": "alt__klasikkot",
+   "renk": "#494D4F",
+   "dosya": "sac/erkek_alt_klasikkot.glb"
+  },
+  {
+   "kat": "alt",
+   "id": "duzkot",
+   "ad": "Düz kot",
+   "mesh": "alt__duzkot",
+   "renk": "#3E5C84",
+   "dosya": "sac/erkek_alt_duzkot.glb"
+  },
+  {
+   "kat": "alt",
+   "id": "ispanyol",
+   "ad": "Bol paça kot",
+   "mesh": "alt__ispanyol",
+   "renk": "#4F6E99",
+   "dosya": "sac/erkek_alt_ispanyol.glb"
+  },
+  {
+   "kat": "alt",
+   "id": "kumas",
+   "ad": "Kumaş pantolon",
+   "mesh": "alt__kumas",
+   "renk": "#212121",
+   "dosya": "sac/erkek_alt_kumas.glb"
+  },
+  {
+   "kat": "alt",
+   "id": "zincirli",
+   "ad": "Zincirli pantolon",
+   "mesh": "alt__zincirli",
+   "renk": "#383A41",
+   "dosya": "sac/erkek_alt_zincirli.glb"
+  },
+  {
+   "kat": "alt",
+   "id": "chino",
+   "ad": "Chino",
+   "mesh": "alt__chino",
+   "renk": "#A25920",
+   "dosya": "sac/erkek_alt_chino.glb"
+  },
+  {
+   "kat": "alt",
+   "id": "rahatpantolon",
+   "ad": "Rahat pantolon",
+   "mesh": "alt__rahatpantolon",
+   "renk": "#BFAE92",
+   "dosya": "sac/erkek_alt_rahatpantolon.glb"
+  },
+  {
+   "kat": "alt",
+   "id": "sort",
+   "ad": "Şort",
+   "mesh": "alt__sort",
+   "renk": "#2D2D2D",
+   "dosya": "sac/erkek_alt_sort.glb"
+  },
+  {
+   "kat": "alt",
+   "id": "bermuda",
+   "ad": "Bermuda",
+   "mesh": "alt__bermuda",
+   "renk": "#2D2D2D",
+   "dosya": "sac/erkek_alt_bermuda.glb"
+  },
+  {
+   "kat": "ayakkabi",
+   "id": "klasik",
+   "ad": "Klasik",
+   "mesh": "ayakkabi__klasik",
+   "renk": "#613D2C",
+   "dosya": "sac/erkek_ayakkabi_klasik.glb"
+  },
+  {
+   "kat": "ayakkabi",
+   "id": "loafer",
+   "ad": "Loafer",
+   "mesh": "ayakkabi__loafer",
+   "renk": "#3D3C39",
+   "dosya": "sac/erkek_ayakkabi_loafer.glb"
+  },
+  {
+   "kat": "ayakkabi",
+   "id": "spor",
+   "ad": "Spor",
+   "mesh": "ayakkabi__spor",
+   "renk": "#070608",
+   "dosya": "sac/erkek_ayakkabi_spor.glb"
+  },
+  {
+   "kat": "ayakkabi",
+   "id": "deri",
+   "ad": "Deri",
+   "mesh": "ayakkabi__deri",
+   "renk": "#212021",
+   "dosya": "sac/erkek_ayakkabi_deri.glb"
+  },
+  {
+   "kat": "ayakkabi",
+   "id": "bot",
+   "ad": "Bot",
+   "mesh": "ayakkabi__bot",
+   "renk": "#514B44",
+   "dosya": "sac/erkek_ayakkabi_bot.glb"
+  },
+  {
+   "kat": "ayakkabi",
+   "id": "sneaker",
+   "ad": "Sneaker",
+   "mesh": "ayakkabi__sneaker",
+   "renk": "#55463F",
+   "dosya": "sac/erkek_ayakkabi_sneaker.glb"
+  },
+  {
+   "kat": "ayakkabi",
+   "id": "rahat",
+   "ad": "Rahat sneaker",
+   "mesh": "ayakkabi__rahat",
+   "renk": "#626260",
+   "dosya": "sac/erkek_ayakkabi_rahat.glb"
+  },
+  {
+   "kat": "ayakkabi",
+   "id": "kosu",
+   "ad": "Koşu ayakkabısı",
+   "mesh": "ayakkabi__kosu",
+   "renk": "#605D55",
+   "dosya": "sac/erkek_ayakkabi_kosu.glb"
+  },
+  {
+   "kat": "ayakkabi",
+   "id": "tenis",
+   "ad": "Tenis ayakkabısı",
+   "mesh": "ayakkabi__tenis",
+   "renk": "#D7D7DA",
+   "dosya": "sac/erkek_ayakkabi_tenis.glb"
+  },
+  {
+   "kat": "ayakkabi",
+   "id": "oxford",
+   "ad": "Oxford",
+   "mesh": "ayakkabi__oxford",
+   "renk": "#7D3F10",
+   "dosya": "sac/erkek_ayakkabi_oxford.glb"
+  },
+  {
+   "kat": "ayakkabi",
+   "id": "ikirenk",
+   "ad": "İki renk oxford",
+   "mesh": "ayakkabi__ikirenk",
+   "renk": "#2B2A2B",
+   "dosya": "sac/erkek_ayakkabi_ikirenk.glb"
+  },
+  {
+   "kat": "ayakkabi",
+   "id": "biker",
+   "ad": "Biker bot",
+   "mesh": "ayakkabi__biker",
+   "renk": "#7E461C",
+   "dosya": "sac/erkek_ayakkabi_biker.glb"
+  },
+  {
+   "kat": "ayakkabi",
+   "id": "deribot",
+   "ad": "Deri bot",
+   "mesh": "ayakkabi__deribot",
+   "renk": "#3C2A12",
+   "dosya": "sac/erkek_ayakkabi_deribot.glb"
+  },
+  {
+   "kat": "ayakkabi",
+   "id": "cizme",
+   "ad": "Binici çizmesi",
+   "mesh": "ayakkabi__cizme",
+   "renk": "#272726",
+   "dosya": "sac/erkek_ayakkabi_cizme.glb"
+  },
+  {
+   "kat": "ayakkabi",
+   "id": "kisbot",
+   "ad": "Kışlık bot",
+   "mesh": "ayakkabi__kisbot",
+   "renk": "#AD9171",
+   "dosya": "sac/erkek_ayakkabi_kisbot.glb"
+  },
+  {
+   "kat": "ayakkabi",
+   "id": "gunluk5",
+   "ad": "Günlük ayakkabı",
+   "mesh": "ayakkabi__gunluk5",
+   "renk": "#3E3B3C",
+   "dosya": "sac/erkek_ayakkabi_gunluk5.glb"
+  },
+  {
+   "kat": "ayakkabi",
+   "id": "gunluk6",
+   "ad": "Lacivert ayakkabı",
+   "mesh": "ayakkabi__gunluk6",
+   "renk": "#33363F",
+   "dosya": "sac/erkek_ayakkabi_gunluk6.glb"
+  },
+  {
+   "kat": "sapka",
+   "id": "fotr",
+   "ad": "Fötr",
+   "mesh": "sapka__fotr",
+   "renk": "#6D6867",
+   "dosya": "sac/erkek_sapka_fotr.glb"
+  },
+  {
+   "kat": "sapka",
+   "id": "kasket",
+   "ad": "Kasket",
+   "mesh": "sapka__kasket",
+   "renk": null,
+   "dosya": "sac/erkek_sapka_kasket.glb"
+  },
+  {
+   "kat": "gozluk",
+   "id": "optik",
+   "ad": "Optik",
+   "mesh": "gozluk__optik",
+   "renk": "#C4C4C4",
+   "dosya": "sac/erkek_gozluk_optik.glb"
+  },
+  {
+   "kat": "gozluk",
+   "id": "kutuphane",
+   "ad": "Kalın çerçeve",
+   "mesh": "gozluk__kutuphane",
+   "renk": "#000000",
+   "dosya": "sac/erkek_gozluk_kutuphane.glb"
+  },
+  {
+   "kat": "gozluk",
+   "id": "ince",
+   "ad": "İnce çerçeve",
+   "mesh": "gozluk__ince",
+   "renk": "#151620",
+   "dosya": "sac/erkek_gozluk_ince.glb"
+  },
+  {
+   "kat": "ust",
+   "id": "blazer",
+   "ad": "Blazer ceket",
+   "mesh": "ust__blazer",
+   "renk": "#203047",
+   "dosya": "sac/erkek_ust_blazer.glb"
+  },
+  {
+   "kat": "ust",
+   "id": "kruvazeblazer",
+   "ad": "Kruvaze blazer",
+   "mesh": "ust__kruvazeblazer",
+   "renk": "#3F455C",
+   "dosya": "sac/erkek_ust_kruvazeblazer.glb"
+  },
+  {
+   "kat": "ust",
+   "id": "ceketkravat",
+   "ad": "Ceket ve kravat",
+   "mesh": "ust__ceketkravat",
+   "renk": "#393326",
+   "dosya": "sac/erkek_ust_ceketkravat.glb"
+  },
+  {
+   "kat": "kas",
+   "id": "k1",
+   "ad": "Kaş 1",
+   "mesh": "kas__k1",
+   "renk": "#0D0706"
+  },
+  {
+   "kat": "kas",
+   "id": "k2",
+   "ad": "Kaş 2",
+   "mesh": "kas__k2",
+   "renk": "#0E0706"
+  },
+  {
+   "kat": "kas",
+   "id": "k3",
+   "ad": "Kaş 3",
+   "mesh": "kas__k3",
+   "renk": "#0F0706"
+  },
+  {
+   "kat": "kas",
+   "id": "k4",
+   "ad": "Kaş 4",
+   "mesh": "kas__k4",
+   "renk": "#000000"
+  },
+  {
+   "kat": "kas",
+   "id": "k5",
+   "ad": "Kaş 5",
+   "mesh": "kas__k5",
+   "renk": "#0A0504"
+  },
+  {
+   "kat": "kas",
+   "id": "k6",
+   "ad": "Kaş 6",
+   "mesh": "kas__k6",
+   "renk": "#0A0000"
+  },
+  {
+   "kat": "kirpik",
+   "id": "r1",
+   "ad": "Kirpik 1",
+   "mesh": "kirpik__r1",
+   "renk": "#080200"
+  },
+  {
+   "kat": "kirpik",
+   "id": "r2",
+   "ad": "Kirpik 2",
+   "mesh": "kirpik__r2",
+   "renk": "#020000"
+  },
+  {
+   "kat": "sac",
+   "id": "buzz",
+   "ad": "Buzz cut",
+   "mesh": "sac__buzz",
+   "renk": "#989898",
+   "dosya": "sac/erkek_buzz.glb"
+  },
+  {
+   "kat": "kabuk",
+   "id": "kabuk",
+   "ad": "Saç kabuğu",
+   "mesh": "kabuk__kabuk",
+   "renk": "#767676"
+  },
+  {
+   "kat": "sakal",
+   "id": "kirli",
+   "ad": "Kirli sakal",
+   "mesh": "sakal__kirli",
+   "renk": "#2a1a13",
+   "dosya": "sac/erkek_sakal_kirli.glb"
+  },
+  {
+   "kat": "sakal",
+   "id": "agirkirli",
+   "ad": "Ağır kirli sakal",
+   "mesh": "sakal__agirkirli",
+   "renk": "#2a1a13",
+   "dosya": "sac/erkek_sakal_agirkirli.glb"
+  },
+  {
+   "kat": "sakal",
+   "id": "kisa",
+   "ad": "Kısa sakal",
+   "mesh": "sakal__kisa",
+   "renk": "#2a1a13",
+   "dosya": "sac/erkek_sakal_kisa.glb"
+  },
+  {
+   "kat": "sakal",
+   "id": "fade",
+   "ad": "Fade sakal",
+   "mesh": "sakal__fade",
+   "renk": "#2a1a13",
+   "dosya": "sac/erkek_sakal_fade.glb"
+  },
+  {
+   "kat": "sakal",
+   "id": "italyan",
+   "ad": "İtalyan sakal",
+   "mesh": "sakal__italyan",
+   "renk": "#2a1a13",
+   "dosya": "sac/erkek_sakal_italyan.glb"
+  },
+  {
+   "kat": "sakal",
+   "id": "dolgunkisa",
+   "ad": "Dolgun kısa sakal",
+   "mesh": "sakal__dolgunkisa",
+   "renk": "#2a1a13",
+   "dosya": "sac/erkek_sakal_dolgunkisa.glb"
+  },
+  {
+   "kat": "sakal",
+   "id": "fransiz",
+   "ad": "Fransız sakal",
+   "mesh": "sakal__fransiz",
+   "renk": "#2a1a13",
+   "dosya": "sac/erkek_sakal_fransiz.glb"
+  },
+  {
+   "kat": "sakal",
+   "id": "keci",
+   "ad": "Keçi sakalı",
+   "mesh": "sakal__keci",
+   "renk": "#2a1a13",
+   "dosya": "sac/erkek_sakal_keci.glb"
+  },
+  {
+   "kat": "sakal",
+   "id": "vandyke",
+   "ad": "Van Dyke",
+   "mesh": "sakal__vandyke",
+   "renk": "#2a1a13",
+   "dosya": "sac/erkek_sakal_vandyke.glb"
+  },
+  {
+   "kat": "biyik",
+   "id": "kirli",
+   "ad": "Kirli bıyık",
+   "mesh": "biyik__kirli",
+   "renk": "#2a1a13",
+   "dosya": "sac/erkek_biyik_kirli.glb"
+  },
+  {
+   "kat": "biyik",
+   "id": "kisa",
+   "ad": "Kısa bıyık",
+   "mesh": "biyik__kisa",
+   "renk": "#2a1a13",
+   "dosya": "sac/erkek_biyik_kisa.glb"
+  },
+  {
+   "kat": "biyik",
+   "id": "dolgun",
+   "ad": "Dolgun bıyık",
+   "mesh": "biyik__dolgun",
+   "renk": "#2a1a13",
+   "dosya": "sac/erkek_biyik_dolgun.glb"
+  },
+  {
+   "kat": "biyik",
+   "id": "kalem",
+   "ad": "Kalem bıyık",
+   "mesh": "biyik__kalem",
+   "renk": "#2a1a13",
+   "dosya": "sac/erkek_biyik_kalem.glb"
+  },
+  {
+   "kat": "biyik",
+   "id": "atnali",
+   "ad": "At nalı bıyık",
+   "mesh": "biyik__atnali",
+   "renk": "#2a1a13",
+   "dosya": "sac/erkek_biyik_atnali.glb"
+  },
+  {
+   "kat": "sac",
+   "id": "daginikquiff_f",
+   "ad": "Dağınık quiff · fade",
+   "mesh": "sac__daginikquiff_f",
+   "renk": "#3F2A0A",
+   "dosya": "sac/erkek_daginikquiff_f.glb",
+   "kabukFade": [
+    0.03,
+    0.3,
+    0.032
+   ]
+  },
+  {
+   "kat": "sac",
+   "id": "yuksekquiff",
+   "ad": "Yüksek quiff · skin fade",
+   "mesh": "sac__yuksekquiff",
+   "renk": "#3F2A0A",
+   "dosya": "sac/erkek_yuksekquiff.glb",
+   "kabukFade": [
+    0.042,
+    0.25,
+    0.024
+   ]
+  },
+  {
+   "kat": "sac",
+   "id": "ortaayrik",
+   "ad": "Orta ayrık dağınık",
+   "mesh": "sac__ortaayrik",
+   "renk": "#3F2A0A",
+   "dosya": "sac/erkek_ortaayrik.glb"
+  },
+  {
+   "kat": "sac",
+   "id": "ortaayrik_f",
+   "ad": "Orta ayrık · fade",
+   "mesh": "sac__ortaayrik_f",
+   "renk": "#3F2A0A",
+   "dosya": "sac/erkek_ortaayrik_f.glb",
+   "kabukFade": [
+    0.032,
+    0.3,
+    0.032
+   ]
+  },
+  {
+   "kat": "sac",
+   "id": "kisacrop",
+   "ad": "Kısa crop · skin fade",
+   "mesh": "sac__kisacrop",
+   "renk": "#3F2A0A",
+   "dosya": "sac/erkek_kisacrop.glb",
+   "kabukFade": [
+    0.045,
+    0.2,
+    0.022
+   ]
+  },
+  {
+   "kat": "sac",
+   "id": "quiff_kisaon",
+   "ad": "Kısa perçemli quiff · fade",
+   "mesh": "sac__quiff_kisaon",
+   "renk": "#3F2A0A",
+   "dosya": "sac/erkek_quiff_kisaon.glb",
+   "kabukFade": [
+    0.035,
+    0.28,
+    0.03
+   ]
+  },
+  {
+   "kat": "sac",
+   "id": "shag_ayrik",
+   "ad": "Shag orta ayrık",
+   "mesh": "sac__shag_ayrik",
+   "renk": "#B32756",
+   "dosya": "sac/erkek_shag_ayrik.glb"
+  },
+  {
+   "kat": "sac",
+   "id": "shag_f",
+   "ad": "Shag · taper",
+   "mesh": "sac__shag_f",
+   "renk": "#B32756",
+   "dosya": "sac/erkek_shag_f.glb",
+   "kabukFade": [
+    0.026,
+    0.3,
+    0.034
+   ]
+  },
+  {
+   "kat": "sac",
+   "id": "undercut",
+   "ad": "Undercut geriye taralı",
+   "mesh": "sac__undercut",
+   "renk": "#000000",
+   "dosya": "sac/erkek_undercut.glb",
+   "kabukFade": [
+    0.04,
+    0.15,
+    0.012
+   ]
+  },
+  {
+   "kat": "sac",
+   "id": "perdelim_f",
+   "ad": "Perdeli · fade",
+   "mesh": "sac__perdelim_f",
+   "renk": "#946A59",
+   "dosya": "sac/erkek_perdelim_f.glb",
+   "kabukFade": [
+    0.028,
+    0.3,
+    0.032
+   ]
+  },
+  {
+   "kat": "sac",
+   "id": "hacimliquiff",
+   "ad": "Hacimli dağınık quiff",
+   "mesh": "sac__hacimliquiff",
+   "renk": "#3F2A0A",
+   "dosya": "sac/erkek_hacimliquiff.glb"
+  },
+  {
+   "kat": "sac",
+   "id": "hacimlishag",
+   "ad": "Hacimli shag",
+   "mesh": "sac__hacimlishag",
+   "renk": "#B32756",
+   "dosya": "sac/erkek_hacimlishag.glb"
+  }
+ ],
+ "tenler": [
+  {
+   "id": "acik",
+   "ad": "Açık",
+   "dosya": "ten_erkek_acik.webp"
+  },
+  {
+   "id": "pembe",
+   "ad": "Pembe beyaz",
+   "dosya": "ten_erkek_pembe.webp"
+  },
+  {
+   "id": "bugday",
+   "ad": "Buğday",
+   "dosya": "ten_erkek_bugday.webp"
+  },
+  {
+   "id": "asya",
+   "ad": "Sarışın ten",
+   "dosya": "ten_erkek_asya.webp"
+  },
+  {
+   "id": "koyu",
+   "ad": "Koyu",
+   "dosya": "ten_erkek_koyu.webp"
+  }
+ ],
+ "gozler": [
+  {
+   "id": "blue",
+   "ad": "Mavi",
+   "dosya": "goz_blue.webp"
+  },
+  {
+   "id": "bluegreen",
+   "ad": "Mavi yeşil",
+   "dosya": "goz_bluegreen.webp"
+  },
+  {
+   "id": "brown",
+   "ad": "Kahve",
+   "dosya": "goz_brown.webp"
+  },
+  {
+   "id": "brownlight",
+   "ad": "Açık kahve",
+   "dosya": "goz_brownlight.webp"
+  },
+  {
+   "id": "deepblue",
+   "ad": "Lacivert",
+   "dosya": "goz_deepblue.webp"
+  },
+  {
+   "id": "green",
+   "ad": "Yeşil",
+   "dosya": "goz_green.webp"
+  },
+  {
+   "id": "grey",
+   "ad": "Gri",
+   "dosya": "goz_grey.webp"
+  },
+  {
+   "id": "ice",
+   "ad": "Buz",
+   "dosya": "goz_ice.webp"
+  },
+  {
+   "id": "lightblue",
+   "ad": "Açık mavi",
+   "dosya": "goz_lightblue.webp"
+  }
+ ]
+}

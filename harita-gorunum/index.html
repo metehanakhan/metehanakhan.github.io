@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Hohla Harita</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" onerror="this.href='https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css'">
+<style>
+  html, body, #map { margin: 0; height: 100%; width: 100%; background: #0E0C12; overflow: hidden; }
+  /* Harita verisi künyesi: küçük, hep görünür; dokununca uygulama dışında açılır (harita sayfası terk edilmez) */
+  .kunye { position: absolute; left: 10px; bottom: calc(var(--alt, 0px) + 6px); z-index: 4; transition: opacity 0.8s ease; font: 500 9.5px system-ui, sans-serif; color: rgba(237, 232, 242, 0.42); background: rgba(14, 12, 18, 0.45); padding: 2px 7px; border-radius: 8px; cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; }
+
+  /* Avatar iğnesi */
+  .pin { z-index: 3; width: 74px; height: 96px; transform-origin: 50% 100%; cursor: pointer; }
+  .pin .halo { position: absolute; left: 50%; top: 37px; width: 70px; height: 70px; margin: -35px 0 0 -35px; border-radius: 50%; background: radial-gradient(circle, var(--c) 0%, transparent 70%); opacity: 0.55; animation: nabiz 2.4s ease-out infinite; }
+  .pin .disk { position: absolute; left: 50%; top: 37px; width: 62px; height: 62px; margin: -31px 0 0 -31px; border-radius: 50%; padding: 3px; box-sizing: border-box; background: conic-gradient(from 210deg, var(--c), #FFFFFF 40%, var(--c) 75%); box-shadow: 0 8px 22px rgba(0, 0, 0, 0.55), 0 0 18px color-mix(in srgb, var(--c) 60%, transparent); }
+  .pin .yuz { width: 100%; height: 100%; border-radius: 50%; background: #1B1820 center 18% / 128% no-repeat; display: flex; align-items: center; justify-content: center; font: 700 22px system-ui, sans-serif; color: #EDE8F2; overflow: hidden; }
+  .pin .ucu { position: absolute; left: 50%; top: 66px; width: 0; height: 0; margin-left: -7px; border: 7px solid transparent; border-top: 10px solid var(--c); filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.5)); }
+  .pin .ad { position: absolute; left: 50%; top: 80px; transform: translateX(-50%); white-space: nowrap; padding: 3px 9px; border-radius: 10px; font: 600 11.5px system-ui, sans-serif; color: #EDE8F2; background: rgba(20, 17, 26, 0.82); border: 1px solid rgba(255, 255, 255, 0.12); backdrop-filter: blur(6px); }
+  .pin .rozet { position: absolute; right: 2px; top: 6px; min-width: 22px; height: 22px; padding: 0 5px; box-sizing: border-box; border-radius: 11px; background: #F2A65A; color: #1A1210; font: 700 11px system-ui, sans-serif; display: none; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); }
+  .pin.yolda .rozet { display: flex; }
+  .pin .yuz.emoji { font-size: 32px; background: radial-gradient(circle at 50% 35%, #2C2636, #17141C); }
+  .pin .hal { position: absolute; left: 50%; bottom: 98px; transform: translateX(-50%); display: none; align-items: center; gap: 5px; max-width: 150px; padding: 4px 10px 4px 6px; border-radius: 16px; background: rgba(250, 246, 240, 0.96); color: #1A1210; font: 650 12px system-ui, sans-serif; white-space: nowrap; box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45); }
+  .pin .hal::after { content: ''; position: absolute; left: 50%; bottom: -6px; margin-left: -6px; border: 6px solid transparent; border-bottom: 0; border-top-color: rgba(250, 246, 240, 0.96); }
+  .pin .hal .he { font-size: 17px; line-height: 1; display: inline-block; animation: zipla 1.8s ease-in-out infinite; }
+  .pin .hal .hy { overflow: hidden; text-overflow: ellipsis; }
+  .pin.halli .hal { display: flex; animation: belir 0.45s cubic-bezier(0.2, 1.4, 0.4, 1) both; }
+  .pin .hal .z { position: absolute; left: 14px; top: -4px; font: 800 11px system-ui; color: #BFD8F2; opacity: 0; animation: zzz 2.4s ease-out infinite; text-shadow: 0 1px 3px rgba(0,0,0,0.6); }
+  .pin .hal .z:nth-child(2) { animation-delay: 0.8s; font-size: 13px; } .pin .hal .z:nth-child(3) { animation-delay: 1.6s; font-size: 15px; }
+  .pin .hal.uyku .he { animation: nefes 3s ease-in-out infinite; }
+  .pin .hal.yol .he { animation: yol 0.9s ease-in-out infinite; }
+  .pin .hal.ask .he { animation: kalpat 1.1s ease-in-out infinite; }
+  .pin .hal.is .he { animation: none; }
+  @keyframes zipla { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+  @keyframes belir { from { opacity: 0; transform: translate(-50%, 8px) scale(0.6); } to { opacity: 1; transform: translate(-50%, 0) scale(1); } }
+  @keyframes zzz { 0% { opacity: 0; transform: translate(0, 0); } 25% { opacity: 1; } 100% { opacity: 0; transform: translate(-14px, -26px); } }
+  @keyframes nefes { 0%, 100% { transform: scale(1); } 50% { transform: scale(0.88); } }
+  @keyframes yol { 0%, 100% { transform: translateX(-2px) rotate(-3deg); } 50% { transform: translateX(2px) rotate(3deg); } }
+  @keyframes kalpat { 0%, 100% { transform: scale(1); } 30% { transform: scale(1.25); } 60% { transform: scale(0.95); } }
+  /* Arama sonucu iğnesi */
+  .ara { z-index: 1; display: flex; flex-direction: column; align-items: center; }
+  .ara .kafa { width: 34px; height: 34px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: #F2A65A; box-shadow: 0 6px 14px rgba(0,0,0,0.5), 0 0 18px rgba(242,166,90,0.6); display: flex; align-items: center; justify-content: center; animation: dus 0.5s cubic-bezier(0.2, 1.5, 0.4, 1) both; }
+  .ara .kafa i { width: 12px; height: 12px; border-radius: 50%; background: #1A1210; }
+  .ara .ad { margin-top: 8px; padding: 3px 9px; border-radius: 10px; font: 600 11.5px system-ui, sans-serif; color: #EDE8F2; background: rgba(20, 17, 26, 0.88); border: 1px solid rgba(242,166,90,0.5); white-space: nowrap; max-width: 180px; overflow: hidden; text-overflow: ellipsis; }
+  @keyframes dus { from { transform: translateY(-30px) rotate(-45deg); opacity: 0; } to { transform: translateY(0) rotate(-45deg); opacity: 1; } }
+  .pin.sis .disk { filter: blur(0.6px) saturate(0.6); }
+  .pin.sis .halo { background: radial-gradient(circle, rgba(200, 200, 220, 0.7) 0%, transparent 70%); animation-duration: 4s; }
+  .pin.eski .disk { filter: grayscale(0.65) brightness(0.8); }
+  .pin.eski .halo { animation: none; opacity: 0.18; }
+  @keyframes nabiz { 0% { transform: scale(0.75); opacity: 0.6; } 100% { transform: scale(1.9); opacity: 0; } }
+
+  /* Yer etiketi */
+  .yer { z-index: 1; display: flex; align-items: center; gap: 6px; padding: 4px 9px 4px 5px; border-radius: 14px; background: rgba(20, 17, 26, 0.86); border: 1px solid color-mix(in srgb, var(--c) 55%, transparent); color: #EDE8F2; font: 600 11.5px system-ui, sans-serif; white-space: nowrap; cursor: pointer; }
+  .yer .em { width: 22px; height: 22px; border-radius: 11px; display: flex; align-items: center; justify-content: center; background: color-mix(in srgb, var(--c) 25%, transparent); font-size: 13px; }
+  .yer .yad { display: flex; flex-direction: column; line-height: 1.15; }
+  .yer small { font-weight: 500; font-size: 10.5px; color: rgba(237, 232, 242, 0.7); }
+  .yer.icerde { box-shadow: 0 0 14px color-mix(in srgb, var(--c) 55%, transparent); }
+  /* Mekân önerisi */
+  .mekan { z-index: 1; cursor: pointer; display: flex; align-items: center; gap: 5px; padding: 3px 9px 3px 4px; border-radius: 12px; background: rgba(20, 17, 26, 0.88); border: 1px solid rgba(242, 166, 90, 0.5); color: #EDE8F2; font: 600 11px system-ui, sans-serif; white-space: nowrap; }
+  .mekan span { font-size: 14px; }
+  .mekan b { font-weight: 600; max-width: 120px; overflow: hidden; text-overflow: ellipsis; }
+  /* Anı iğnesi */
+  .ani { z-index: 2; width: 52px; height: 62px; cursor: pointer; }
+  .ani .foto { width: 52px; height: 52px; border-radius: 14px; border: 3px solid #F2C46A; box-sizing: border-box; background: #2A2338 center / cover no-repeat; display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5), 0 0 14px rgba(242, 196, 106, 0.45); transform: rotate(-4deg); }
+  .ani .ucu { position: absolute; left: 50%; bottom: 0; margin-left: -6px; border: 6px solid transparent; border-top: 9px solid #F2C46A; }
+  /* Uzaktan bakınca (şehir ölçeği) anılar küçük rozet, yer etiketleri tek satır: kişi iğnelerini örtmesin */
+  .uzak .ani { width: 28px; height: 36px; }
+  .uzak .ani .foto { width: 28px; height: 28px; border-width: 2px; border-radius: 9px; font-size: 13px; }
+  .uzak .ani .ucu { margin-left: -4px; border-width: 4px; border-top-width: 6px; }
+  .uzak .yer small { display: none; }
+  .uzak .orta { font-size: 11.5px; padding: 4px 9px; }
+  /* Haritadan seçim nişangâhı */
+  .nisan { display: none; position: absolute; left: 50%; top: 50%; width: 34px; height: 34px; margin: -17px 0 0 -17px; pointer-events: none; z-index: 5; }
+  .nisan i { position: absolute; inset: 0; border-radius: 50%; border: 2px solid #F2A65A; box-shadow: 0 0 0 4px rgba(242, 166, 90, 0.25); }
+  .nisan i::after { content: ''; position: absolute; left: 50%; top: 50%; width: 6px; height: 6px; margin: -3px 0 0 -3px; border-radius: 50%; background: #F2A65A; }
+
+  /* Ortadaki mesafe etiketi */
+  .orta { padding: 6px 12px; border-radius: 14px; font: 600 12.5px system-ui, sans-serif; color: #EDE8F2; background: rgba(20, 17, 26, 0.86); border: 1px solid rgba(232, 121, 166, 0.45); box-shadow: 0 0 18px rgba(232, 121, 166, 0.35); white-space: nowrap; cursor: pointer; }
+  .orta b { color: #F2A65A; font-weight: 700; }
+
+  /* Kavuşma: iki portre iç içe ve kalpler */
+  .kavus { width: 120px; height: 100px; }
+  .kavus .disk { position: absolute; top: 10px; width: 62px; height: 62px; border-radius: 50%; padding: 3px; box-sizing: border-box; background: linear-gradient(135deg, #F2A65A, #E879A6); box-shadow: 0 8px 22px rgba(0, 0, 0, 0.55); }
+  .kavus .disk:first-child { left: 10px; } .kavus .disk:nth-child(2) { left: 48px; }
+  .kavus .yuz { width: 100%; height: 100%; border-radius: 50%; background: #1B1820 center 18% / 128% no-repeat; display: flex; align-items: center; justify-content: center; font: 700 22px system-ui; color: #EDE8F2; }
+  .kavus .kalp { position: absolute; left: 50%; top: 0; font-size: 18px; animation: kalp 2.2s ease-in infinite; opacity: 0; }
+  @keyframes kalp { 0% { transform: translate(-50%, 30px) scale(0.6); opacity: 0; } 30% { opacity: 1; } 100% { transform: translate(-50%, -30px) scale(1.1); opacity: 0; } }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+  // MapLibre: önce jsdelivr, olmazsa unpkg; ikisi de olmazsa uygulamaya haber ver
+  (function yukle(kaynaklar) {
+    if (!kaynaklar.length) {
+      var m = { source: 'hohla-harita', type: 'hata' };
+      if (window.ReactNativeWebView) window.ReactNativeWebView.postMessage(JSON.stringify(m));
+      else if (window.parent !== window) window.parent.postMessage(m, '*');
+      return;
+    }
+    var s = document.createElement('script');
+    s.src = kaynaklar[0];
+    s.onload = function () {
+      var h = document.createElement('script');
+      h.src = './harita.js';
+      document.body.appendChild(h);
+    };
+    s.onerror = function () {
+      s.remove();
+      yukle(kaynaklar.slice(1));
+    };
+    document.body.appendChild(s);
+  })(['https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js', 'https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js']);
+</script>
+</body>
+</html>
