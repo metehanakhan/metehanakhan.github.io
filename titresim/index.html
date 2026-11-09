@@ -166,7 +166,10 @@
     });
   });
   function render() {
-    var lines = ['Hohla titreşim testi', dev, 'Titreşim özelliği: ' + (vibOk ? 'var' : 'yok'), ''];
+    // İlk satır her şeyi taşısın: paylaşırken yalnızca ilk satır giderse de sonuç kaybolmasın
+    var mark = function (k) { return answers[k] === 'yes' ? 'evet' : answers[k] === 'no' ? 'hayir' : '-'; };
+    var short = 'Hohla testi | ' + dev + ' | vibrate:' + (vibOk ? 'var' : 'yok') + ' | 1 dokun:' + mark('dokun') + ' 2 basili:' + mark('basili') + ' 3 kendi:' + mark('kendiliginden') + ' 4 ses:' + mark('ses') + ' 5 titret:' + mark('vibrate');
+    var lines = [short, '', 'Titreşim özelliği: ' + (vibOk ? 'var' : 'yok')];
     Object.keys(names).forEach(function (k) {
       lines.push((answers[k] === 'yes' ? '✅ ' : answers[k] === 'no' ? '❌ ' : '·  ') + names[k] + (answers[k] ? '' : ' (denenmedi)'));
     });
