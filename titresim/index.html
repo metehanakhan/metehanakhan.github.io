@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="tr" translate="no">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0E1116" />
+<title>Hohla · Titreşim testi</title>
+<style>
+  :root {
+    --bg: #0e1116;
+    --card: #161b22;
+    --line: rgba(232, 238, 245, 0.1);
+    --mist: #e8eef5;
+    --dim: rgba(232, 238, 245, 0.62);
+    --fire: #ff6a3d;
+    --ember: #ffc15e;
+    --ok: #8fd6a8;
+    --bad: #ff6b7d;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; background: var(--bg); color: var(--mist); }
+  body {
+    font: 16px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    padding: max(20px, env(safe-area-inset-top)) 16px max(28px, env(safe-area-inset-bottom));
+    max-width: 520px; margin: 0 auto;
+    -webkit-user-select: none; user-select: none;
+  }
+  h1 { font-weight: 300; font-size: 32px; letter-spacing: -0.5px; margin: 4px 0 6px; }
+  .lead { color: var(--dim); margin: 0 0 16px; }
+  .device { font-size: 13px; color: var(--dim); background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; margin-bottom: 14px; }
+  .device b { color: var(--mist); font-weight: 600; }
+  .tips { font-size: 14px; color: var(--dim); background: rgba(255, 193, 94, 0.07); border: 1px solid rgba(255, 193, 94, 0.25); border-radius: 16px; padding: 12px 14px; margin-bottom: 18px; }
+  .tips b { color: var(--ember); }
+  .tips ul { margin: 6px 0 0; padding-left: 18px; }
+  .test { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 16px; margin-bottom: 14px; }
+  .test h2 { font-size: 17px; font-weight: 600; margin: 0 0 4px; display: flex; gap: 8px; align-items: center; }
+  .num { width: 24px; height: 24px; border-radius: 12px; background: rgba(255, 106, 61, 0.18); color: var(--fire); font-size: 13px; display: inline-flex; align-items: center; justify-content: center; flex: none; }
+  .test p { color: var(--dim); font-size: 14px; margin: 0 0 12px; }
+  button { font: inherit; border: 0; cursor: pointer; }
+  .go { width: 100%; height: 52px; border-radius: 26px; background: var(--fire); color: #2a0e05; font-weight: 600; font-size: 16px; box-shadow: 0 0 22px rgba(255, 106, 61, 0.35); transition: transform 0.08s; }
+  .go:active { transform: scale(0.97); }
+  .go.on { background: var(--ember); }
+  .pad { height: 130px; border-radius: 20px; border: 1.5px dashed rgba(255, 193, 94, 0.45); display: flex; align-items: center; justify-content: center; text-align: center; color: var(--ember); font-weight: 600; touch-action: none; transition: background 0.15s; }
+  .pad.hold { background: rgba(255, 193, 94, 0.12); border-style: solid; }
+  .beat { animation: beat 0.35s ease-out; }
+  @keyframes beat { 0% { transform: scale(1); } 30% { transform: scale(1.04); } 100% { transform: scale(1); } }
+  .status { font-size: 13px; color: var(--dim); margin-top: 8px; min-height: 18px; }
+  .answer { display: flex; gap: 8px; margin-top: 12px; }
+  .answer button { flex: 1; height: 42px; border-radius: 21px; background: rgba(232, 238, 245, 0.07); color: var(--mist); font-size: 14px; }
+  .answer button.sel-yes { background: rgba(143, 214, 168, 0.2); color: var(--ok); box-shadow: inset 0 0 0 1.5px var(--ok); }
+  .answer button.sel-no { background: rgba(255, 107, 125, 0.16); color: var(--bad); box-shadow: inset 0 0 0 1.5px var(--bad); }
+  .sum { background: var(--card); border: 1px solid rgba(255, 106, 61, 0.35); border-radius: 22px; padding: 16px; margin-top: 18px; }
+  .sum h2 { margin: 0 0 8px; font-size: 18px; font-weight: 600; }
+  .sum pre { white-space: pre-wrap; font: 13px/1.5 ui-monospace, Menlo, monospace; color: var(--dim); background: rgba(0, 0, 0, 0.25); border-radius: 12px; padding: 10px; margin: 0 0 12px; -webkit-user-select: text; user-select: text; }
+  .ghost { width: 100%; height: 46px; border-radius: 23px; background: transparent; color: var(--mist); box-shadow: inset 0 0 0 1px rgba(232, 238, 245, 0.3); margin-top: 8px; }
+</style>
+</head>
+<body>
+  <h1>Titreşim testi</h1>
+  <p class="lead">Bu sayfa telefonunun Hohla'da neyi hissettirebildiğini ölçer. Her denemeden sonra hissettin mi, söyle. En altta sonuçları Metehan'a gönder.</p>
+
+  <div class="device" id="device"></div>
+
+  <div class="tips">
+    <b>Başlamadan önce</b>
+    <ul>
+      <li>Ayarlar → Ses ve Dokunuş → <b>Sistem Dokunuşları</b> açık olsun.</li>
+      <li><b>Düşük Güç Modu</b> açıksa kapat (dokunuşları kısabiliyor).</li>
+      <li>4. deneme için yandaki <b>sessiz tuşunu</b> kapat ve sesi aç.</li>
+    </ul>
+  </div>
+
+  <section class="test" data-id="dokun">
+    <h2><span class="num">1</span>Dokununca tık</h2>
+    <p>Düğmeye bas. Parmağının altında küçük bir "tık" hissetmelisin.</p>
+    <button class="go" id="t1">Bana dokun</button>
+    <div class="answer"></div>
+  </section>
+
+  <section class="test" data-id="basili">
+    <h2><span class="num">2</span>Basılı tutunca kalp atışı</h2>
+    <p>Avuç avuca gibi: parmağını kutuya koy ve bekle. Her saniye çift vuruş (güm-güm) gelmeli.</p>
+    <div class="pad" id="t2">Parmağını buraya koy<br />ve bırakma</div>
+    <div class="status" id="s2"></div>
+    <div class="answer"></div>
+  </section>
+
+  <section class="test" data-id="kendiliginden">
+    <h2><span class="num">3</span>Dokunmadan, kendiliğinden</h2>
+    <p>Düğmeye bas ve <b>ekrandan elini çek</b>. 2 saniye sonra 3 tık gelecek. Sevgilinden gelen bir işaret böyle gelirdi.</p>
+    <button class="go" id="t3">Başlat, sonra elini çek</button>
+    <div class="status" id="s3"></div>
+    <div class="answer"></div>
+  </section>
+
+  <section class="test" data-id="ses">
+    <h2><span class="num">4</span>Kalp atışı sesi</h2>
+    <p>Hoparlörden çok pes bir güm-güm. Telefonu avucunda tut: titreşim gibi hissediliyor mu?</p>
+    <button class="go" id="t4">Sesi başlat</button>
+    <div class="answer"></div>
+  </section>
+
+  <section class="test" data-id="vibrate">
+    <h2><span class="num">5</span>Gerçek titreşim (Android usulü)</h2>
+    <p>Tarayıcının titreşim özelliği. iPhone'da büyük ihtimalle çalışmaz, karşılaştırma için.</p>
+    <button class="go" id="t5">Titret</button>
+    <div class="status" id="s5"></div>
+    <div class="answer"></div>
+  </section>
+
+  <div class="sum">
+    <h2>Sonuçlar</h2>
+    <pre id="sum"></pre>
+    <button class="go" id="share">Metehan'a gönder</button>
+    <button class="ghost" id="copy">Kopyala</button>
+  </div>
+
+<script>
+(function () {
+  // ---------- iPhone dokunuşu: iOS 18'in anahtar (switch) kutusuna basılınca gelen sistem tıkı ----------
+  function tick() {
+    try {
+      var label = document.createElement('label');
+      label.setAttribute('aria-hidden', 'true');
+      label.style.display = 'none';
+      var input = document.createElement('input');
+      input.type = 'checkbox';
+      input.setAttribute('switch', '');
+      label.appendChild(input);
+      document.head.appendChild(label);
+      label.click();
+      document.head.removeChild(label);
+    } catch (e) {}
+    // Android'de gerçek titreşim de dene
+    if (navigator.vibrate) { try { navigator.vibrate(15); } catch (e) {} }
+  }
+
+  // ---------- cihaz bilgisi ----------
+  var ua = navigator.userAgent;
+  var ios = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var m = ua.match(/OS (\d+)[_.](\d+)/);
+  var iosVer = ios && m ? m[1] + '.' + m[2] : null;
+  var browser = /CriOS/.test(ua) ? 'Chrome' : /FxiOS/.test(ua) ? 'Firefox' : /EdgiOS|Edg\//.test(ua) ? 'Edge' : /Chrome/.test(ua) ? 'Chrome' : /Safari/.test(ua) ? 'Safari' : 'Tarayıcı';
+  var standalone = window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches;
+  var switchOk = (function () { var i = document.createElement('input'); i.type = 'checkbox'; i.setAttribute('switch', ''); return 'switch' in i || ios; })();
+  var vibOk = typeof navigator.vibrate === 'function';
+  var dev = (ios ? 'iPhone' + (iosVer ? ', iOS ' + iosVer : '') : (/Android/.test(ua) ? 'Android' : 'Bilgisayar')) + ' · ' + browser + (standalone ? ' · Ana ekrandan açık' : '');
+  document.getElementById('device').innerHTML = '<b>' + dev + '</b><br>Titreşim özelliği: ' + (vibOk ? 'var' : 'yok') + (ios && iosVer && parseFloat(iosVer) < 18 ? '<br>iOS 18 altı: dokunuş tıkı büyük ihtimalle gelmez, güncelleme gerekebilir.' : '');
+
+  // ---------- cevaplar ----------
+  var answers = {};
+  var names = { dokun: '1 Dokununca tık', basili: '2 Basılı tutunca kalp atışı', kendiliginden: '3 Dokunmadan, kendiliğinden', ses: '4 Kalp atışı sesi', vibrate: '5 Gerçek titreşim' };
+  document.querySelectorAll('.test').forEach(function (sec) {
+    var id = sec.getAttribute('data-id');
+    var box = sec.querySelector('.answer');
+    [['yes', 'Hissettim'], ['no', 'Hissetmedim']].forEach(function (a) {
+      var b = document.createElement('button');
+      b.textContent = a[1];
+      b.onclick = function () {
+        answers[id] = a[0];
+        box.querySelectorAll('button').forEach(function (x) { x.className = ''; });
+        b.className = 'sel-' + a[0];
+        render();
+      };
+      box.appendChild(b);
+    });
+  });
+  function render() {
+    var lines = ['Hohla titreşim testi', dev, 'Titreşim özelliği: ' + (vibOk ? 'var' : 'yok'), ''];
+    Object.keys(names).forEach(function (k) {
+      lines.push((answers[k] === 'yes' ? '✅ ' : answers[k] === 'no' ? '❌ ' : '·  ') + names[k] + (answers[k] ? '' : ' (denenmedi)'));
+    });
+    document.getElementById('sum').textContent = lines.join('\n');
+  }
+  render();
+
+  // ---------- 1: dokununca ----------
+  document.getElementById('t1').addEventListener('click', tick);
+
+  // ---------- 2: basılı tutunca kalp atışı ----------
+  var pad = document.getElementById('t2');
+  var s2 = document.getElementById('s2');
+  var holdTimer = null, beats = 0;
+  function beat() {
+    tick();
+    setTimeout(tick, 170);
+    beats++;
+    s2.textContent = beats + ' vuruş gönderildi';
+    pad.classList.remove('beat'); void pad.offsetWidth; pad.classList.add('beat');
+  }
+  function down(e) {
+    e.preventDefault();
+    if (holdTimer) return;
+    pad.classList.add('hold');
+    beats = 0;
+    beat();
+    holdTimer = setInterval(beat, 1000);
+  }
+  function up() {
+    clearInterval(holdTimer); holdTimer = null;
+    pad.classList.remove('hold');
+  }
+  pad.addEventListener('touchstart', down, { passive: false });
+  pad.addEventListener('touchend', up);
+  pad.addEventListener('touchcancel', up);
+  pad.addEventListener('mousedown', down);
+  window.addEventListener('mouseup', up);
+
+  // ---------- 3: dokunmadan ----------
+  var s3 = document.getElementById('s3');
+  document.getElementById('t3').addEventListener('click', function () {
+    s3.textContent = 'Elini çek… 2';
+    setTimeout(function () { s3.textContent = 'Elini çek… 1'; }, 1000);
+    setTimeout(function () {
+      s3.textContent = 'Şimdi: tık, tık, tık';
+      tick(); setTimeout(tick, 350); setTimeout(tick, 700);
+    }, 2000);
+  });
+
+  // ---------- 4: kalp atışı sesi ----------
+  var ctx = null, loop = null;
+  var b4 = document.getElementById('t4');
+  function thump(at, amp) {
+    // Pes bir vuruş: hızlı yükselen, kısa sönen alçak ton (+ hoparlörde duyulsun diye bir üst katı)
+    [[70, 1], [140, 0.35]].forEach(function (f) {
+      var o = ctx.createOscillator();
+      var g = ctx.createGain();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(f[0] * 1.4, at);
+      o.frequency.exponentialRampToValueAtTime(f[0], at + 0.08);
+      g.gain.setValueAtTime(0.0001, at);
+      g.gain.exponentialRampToValueAtTime(amp * f[1], at + 0.012);
+      g.gain.exponentialRampToValueAtTime(0.0001, at + 0.22);
+      o.connect(g); g.connect(ctx.destination);
+      o.start(at); o.stop(at + 0.25);
+    });
+  }
+  b4.addEventListener('click', function () {
+    if (loop) {
+      clearInterval(loop); loop = null;
+      b4.textContent = 'Sesi başlat'; b4.classList.remove('on');
+      return;
+    }
+    ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
+    if (ctx.state === 'suspended') ctx.resume();
+    var play = function () { var t = ctx.currentTime + 0.05; thump(t, 0.9); thump(t + 0.22, 0.6); };
+    play();
+    loop = setInterval(play, 1000);
+    b4.textContent = 'Sesi durdur'; b4.classList.add('on');
+  });
+
+  // ---------- 5: vibrate ----------
+  document.getElementById('t5').addEventListener('click', function () {
+    var s5 = document.getElementById('s5');
+    if (!vibOk) { s5.textContent = 'Bu tarayıcıda titreşim özelliği yok.'; return; }
+    var r = navigator.vibrate([200, 100, 200]);
+    s5.textContent = r ? 'Titreşim gönderildi.' : 'Tarayıcı titreşimi reddetti.';
+  });
+
+  // ---------- gönder / kopyala ----------
+  function text() { return document.getElementById('sum').textContent; }
+  document.getElementById('share').addEventListener('click', function () {
+    if (navigator.share) navigator.share({ text: text() }).catch(function () {});
+    else copy();
+  });
+  function copy() {
+    var done = function () { document.getElementById('copy').textContent = 'Kopyalandı'; };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text()).then(done, fallback);
+    else fallback();
+    function fallback() {
+      var ta = document.createElement('textarea');
+      ta.value = text(); document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+  }
+  document.getElementById('copy').addEventListener('click', copy);
+})();
+</script>
+</body>
+</html>
