@@ -1731,10 +1731,14 @@ const api = {
   manifest: async (beden) => (await loadSet(beden)).man,
 };
 window.hohlaAvatar = api;
-window.hohlaGelistir = (fn) => fn({ cur, cfg, THREE, renderer, gez, mekan, dolapIstek }); // GEÇİCİ
+// Geliştirme kancaları yalnızca yerel sunucuda (yayındaki sitede açık kalmasın)
+const yerelGelistirme = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+if (yerelGelistirme) window.hohlaGelistir = (fn) => fn({ cur, cfg, THREE, renderer, gez, mekan, dolapIstek }); // GEÇİCİ
 // Tanı: görünen parçalar ve malzeme renkleri (geliştirme sırasında kontrol için)
-window.hohlaTani = () => cur && Object.entries(cur.parts).filter(([, p]) => p.obj.visible).map(([n, p]) => { const ms = meshesOf(p.obj); const g = ms[0]?.geometry; const at = {}; for (const [k, v] of Object.entries(g?.attributes || {})) if (k.startsWith('_')) { let lo = 1e9, hi = -1e9; for (let i = 0; i < v.count; i++) { const x = v.getX(i); lo = Math.min(lo, x); hi = Math.max(hi, x); } at[k] = [+lo.toFixed(3), +hi.toFixed(3)]; } return { at, n, renk: '#' + [].concat(ms[0].material)[0].color.getHexString(), kose: g?.attributes.position.count, kat: !!g?.attributes._kat, bb: g && (g.computeBoundingBox(), [g.boundingBox.min.y.toFixed(3), g.boundingBox.max.y.toFixed(3)]) }; });
+if (yerelGelistirme) window.hohlaTani = () => cur && Object.entries(cur.parts).filter(([, p]) => p.obj.visible).map(([n, p]) => { const ms = meshesOf(p.obj); const g = ms[0]?.geometry; const at = {}; for (const [k, v] of Object.entries(g?.attributes || {})) if (k.startsWith('_')) { let lo = 1e9, hi = -1e9; for (let i = 0; i < v.count; i++) { const x = v.getX(i); lo = Math.min(lo, x); hi = Math.max(hi, x); } at[k] = [+lo.toFixed(3), +hi.toFixed(3)]; } return { at, n, renk: '#' + [].concat(ms[0].material)[0].color.getHexString(), kose: g?.attributes.position.count, kat: !!g?.attributes._kat, bb: g && (g.computeBoundingBox(), [g.boundingBox.min.y.toFixed(3), g.boundingBox.max.y.toFixed(3)]) }; });
 window.addEventListener('message', async (e) => {
+  // Yalnızca aynı sitedeki uygulama (web iframe) komut verebilir; telefonda veri injectJavaScript ile gelir
+  if (e.origin !== location.origin) return;
   let m = e.data;
   if (typeof m === 'string') {
     try {

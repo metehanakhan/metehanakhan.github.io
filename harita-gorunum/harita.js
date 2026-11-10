@@ -9,6 +9,11 @@
   let alt = Number(q.get('alt') || 260); // alttaki kartın yüksekliği (px)
   let ust = Number(q.get('ust') || 110);
 
+  // Güvenlik: sevgilinin yazdığı yer adı, anı fotoğrafı gibi metinler HTML olarak çalışmasın
+  const esc = (v) => String(v == null ? '' : v).replace(/[&<>"'`]/g, (c) => '&#' + c.charCodeAt(0) + ';');
+  // Arka plan resmi yalnızca resim verisi ya da https adresi olabilir (CSS/HTML kaçışı yok)
+  const guvenliResim = (u) => (typeof u === 'string' && /^(data:image\/[a-z+.-]+;base64,[A-Za-z0-9+/=\s]+|https:\/\/[^'"()\s<>\\]+)$/i.test(u) ? u : null);
+
   function post(type, extra) {
     const msg = Object.assign({ source: 'hohla-harita', type }, extra || {});
     if (window.ReactNativeWebView) window.ReactNativeWebView.postMessage(JSON.stringify(msg));
@@ -276,7 +281,7 @@
       const el = mk.getElement();
       el.style.setProperty('--c', y.sahip === 'ben' ? BEN : O);
       el.classList.toggle('icerde', !!y.icerde);
-      el.innerHTML = `<span class="em">${y.emoji}</span><span class="yad">${y.ad}${y.durum ? `<small>${y.durum}</small>` : ''}</span>`;
+      el.innerHTML = `<span class="em">${esc(y.emoji)}</span><span class="yad">${esc(y.ad)}${y.durum ? `<small>${esc(y.durum)}</small>` : ''}</span>`;
       mk.setLngLat([y.lng, y.lat]).addTo(map);
     }
     for (const id of Object.keys(yerMarkers)) {
@@ -327,7 +332,7 @@
   function mekanEl(x) {
     const el = document.createElement('div');
     el.className = 'mekan';
-    el.innerHTML = `<span>${x.emoji}</span><b></b>`;
+    el.innerHTML = `<span>${esc(x.emoji)}</span><b></b>`;
     el.querySelector('b').textContent = x.ad;
     el.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -338,7 +343,9 @@
   function aniEl(x) {
     const el = document.createElement('div');
     el.className = 'ani';
-    el.innerHTML = `<div class="foto"${x.foto ? ` style="background-image:url('${x.foto}')"` : ''}>${x.foto ? '' : '📸'}</div><div class="ucu"></div>`;
+    const foto = guvenliResim(x.foto);
+    el.innerHTML = `<div class="foto">${foto ? '' : '📸'}</div><div class="ucu"></div>`;
+    if (foto) el.querySelector('.foto').style.backgroundImage = `url("${foto}")`;
     el.title = x.baslik;
     el.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -538,6 +545,9 @@
   };
   window.hohlaHarita = api;
   window.addEventListener('message', (e) => {
+    // Yalnızca aynı sitedeki uygulama (web iframe) komut verebilir; başka bir site bu sayfayı
+    // çerçeveye alıp veri yollayamasın. Telefonda veri injectJavaScript ile gelir, buradan değil.
+    if (e.origin !== location.origin || e.source !== window.parent) return;
     let m = e.data;
     if (typeof m === 'string') {
       try {
