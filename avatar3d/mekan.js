@@ -1033,7 +1033,7 @@ export function mekanKur(THREE, scene, renderer) {
       return kapak;
     },
     kok,
-    sec(ad, b) {
+    sec(ad, b, gecici = false) {
       if (!MEKANLAR.includes(ad)) ad = 'oda';
       beden = b || beden;
       const s = ad === 'sade' ? null : kur(ad);
@@ -1048,8 +1048,8 @@ export function mekanKur(THREE, scene, renderer) {
         isikKur([]);
         renderer.setClearColor(0x000000, 0);
       }
-      kapak = kapakHedef = 0;
-      if (s?.dolap) kapakAyarla(s.dolap, 0);
+      if (!gecici) kapak = kapakHedef = 0;
+      if (s?.dolap) kapakAyarla(s.dolap, gecici ? kapak : 0);
     },
     kapakAc(ac) {
       kapakHedef = ac ? 1 : 0;

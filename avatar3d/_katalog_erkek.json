@@ -1,0 +1,352 @@
+[
+ {
+  "mesh": "k00",
+  "ad": "Afro01",
+  "kose": 2196
+ },
+ {
+  "mesh": "k01",
+  "ad": "Bob01",
+  "kose": 5203
+ },
+ {
+  "mesh": "k02",
+  "ad": "Bob02",
+  "kose": 1653
+ },
+ {
+  "mesh": "k03",
+  "ad": "Braid01",
+  "kose": 4493
+ },
+ {
+  "mesh": "k04",
+  "ad": "Cortu shaggy green hair",
+  "kose": 968
+ },
+ {
+  "mesh": "k05",
+  "ad": "Cortu short messy hair",
+  "kose": 832
+ },
+ {
+  "mesh": "k06",
+  "ad": "Cortu straight bangs",
+  "kose": 848
+ },
+ {
+  "mesh": "k07",
+  "ad": "Cortu strawberry cloud hair",
+  "kose": 479
+ },
+ {
+  "mesh": "k08",
+  "ad": "Culturalibre hair 01",
+  "kose": 3138
+ },
+ {
+  "mesh": "k09",
+  "ad": "Culturalibre hair 02",
+  "kose": 2314
+ },
+ {
+  "mesh": "k10",
+  "ad": "Culturalibre hair 05",
+  "kose": 2604
+ },
+ {
+  "mesh": "k11",
+  "ad": "Culturalibre hair 06",
+  "kose": 7548
+ },
+ {
+  "mesh": "k12",
+  "ad": "Culturalibre hair 11",
+  "kose": 22427
+ },
+ {
+  "mesh": "k13",
+  "ad": "Culturalibre hair 12",
+  "kose": 22791
+ },
+ {
+  "mesh": "k14",
+  "ad": "Culturalibre hair 13",
+  "kose": 17216
+ },
+ {
+  "mesh": "k15",
+  "ad": "Culturalibre hair 14",
+  "kose": 11771
+ },
+ {
+  "mesh": "k16",
+  "ad": "Culturalibre hair 17",
+  "kose": 6764
+ },
+ {
+  "mesh": "k17",
+  "ad": "Culturalibre hair 18",
+  "kose": 4072
+ },
+ {
+  "mesh": "k18",
+  "ad": "Elvs 50s updo",
+  "kose": 1372
+ },
+ {
+  "mesh": "k19",
+  "ad": "Elvs adrienne hair",
+  "kose": 6266
+ },
+ {
+  "mesh": "k20",
+  "ad": "Elvs ashley may hair",
+  "kose": 6254
+ },
+ {
+  "mesh": "k21",
+  "ad": "Elvs braid bun",
+  "kose": 10572
+ },
+ {
+  "mesh": "k22",
+  "ad": "Elvs braided rows",
+  "kose": 21742
+ },
+ {
+  "mesh": "k23",
+  "ad": "Elvs daisy hair",
+  "kose": 4940
+ },
+ {
+  "mesh": "k24",
+  "ad": "Elvs double mh braid",
+  "kose": 7969
+ },
+ {
+  "mesh": "k25",
+  "ad": "Elvs french braid variation",
+  "kose": 6452
+ },
+ {
+  "mesh": "k26",
+  "ad": "Elvs grump hair",
+  "kose": 9522
+ },
+ {
+  "mesh": "k27",
+  "ad": "Elvs hazel hair",
+  "kose": 3494
+ },
+ {
+  "mesh": "k28",
+  "ad": "Elvs inverted curly bob",
+  "kose": 2340
+ },
+ {
+  "mesh": "k29",
+  "ad": "Elvs island princess hair",
+  "kose": 5865
+ },
+ {
+  "mesh": "k30",
+  "ad": "Elvs katherine hair",
+  "kose": 3369
+ },
+ {
+  "mesh": "k31",
+  "ad": "Elvs keylth hair",
+  "kose": 3383
+ },
+ {
+  "mesh": "k32",
+  "ad": "Elvs lady hippy hair",
+  "kose": 4001
+ },
+ {
+  "mesh": "k33",
+  "ad": "Elvs lara hair",
+  "kose": 16032
+ },
+ {
+  "mesh": "k34",
+  "ad": "Elvs maxwell hair",
+  "kose": 765
+ },
+ {
+  "mesh": "k35",
+  "ad": "Elvs micky afro",
+  "kose": 866
+ },
+ {
+  "mesh": "k36",
+  "ad": "Elvs reverse french braid bun",
+  "kose": 5712
+ },
+ {
+  "mesh": "k37",
+  "ad": "Elvs short daisy hair",
+  "kose": 2692
+ },
+ {
+  "mesh": "k38",
+  "ad": "Elvs short side do",
+  "kose": 50274
+ },
+ {
+  "mesh": "k39",
+  "ad": "Elvs that 80s babe hair",
+  "kose": 4583
+ },
+ {
+  "mesh": "k40",
+  "ad": "Elvs unkempt french braid",
+  "kose": 6506
+ },
+ {
+  "mesh": "k41",
+  "ad": "Elvs wavy bob",
+  "kose": 3606
+ },
+ {
+  "mesh": "k42",
+  "ad": "Elvs witchy lil bob",
+  "kose": 1349
+ },
+ {
+  "mesh": "k43",
+  "ad": "Faydaen hair 1",
+  "kose": 541
+ },
+ {
+  "mesh": "k44",
+  "ad": "Grinsegold wig bow tie",
+  "kose": 694
+ },
+ {
+  "mesh": "k45",
+  "ad": "Grinsegold wig bun blonde braids",
+  "kose": 3573
+ },
+ {
+  "mesh": "k46",
+  "ad": "Learning anime hair",
+  "kose": 45860
+ },
+ {
+  "mesh": "k47",
+  "ad": "Littleright bobcut hair",
+  "kose": 1901
+ },
+ {
+  "mesh": "k48",
+  "ad": "Long01",
+  "kose": 3239
+ },
+ {
+  "mesh": "k49",
+  "ad": "O4saken chinesebob01",
+  "kose": 12521
+ },
+ {
+  "mesh": "k50",
+  "ad": "O4saken curly01",
+  "kose": 122875
+ },
+ {
+  "mesh": "k51",
+  "ad": "O4saken long01",
+  "kose": 15007
+ },
+ {
+  "mesh": "k52",
+  "ad": "Ponytail01",
+  "kose": 3718
+ },
+ {
+  "mesh": "k53",
+  "ad": "Punkduck alpha7 curly",
+  "kose": 6068
+ },
+ {
+  "mesh": "k54",
+  "ad": "Punkduck alpha7 curly2",
+  "kose": 3266
+ },
+ {
+  "mesh": "k55",
+  "ad": "Punkduck alpha7 long",
+  "kose": 2258
+ },
+ {
+  "mesh": "k56",
+  "ad": "Punkduck alpha7 long2",
+  "kose": 1988
+ },
+ {
+  "mesh": "k57",
+  "ad": "Rehmanpolanski hair bun brown",
+  "kose": 2524
+ },
+ {
+  "mesh": "k58",
+  "ad": "Short01",
+  "kose": 2984
+ },
+ {
+  "mesh": "k59",
+  "ad": "Short02",
+  "kose": 1755
+ },
+ {
+  "mesh": "k60",
+  "ad": "Short03",
+  "kose": 1011
+ },
+ {
+  "mesh": "k61",
+  "ad": "Short04",
+  "kose": 865
+ },
+ {
+  "mesh": "k62",
+  "ad": "Sonntag78 blond with headband",
+  "kose": 1265
+ },
+ {
+  "mesh": "k63",
+  "ad": "Sonntag78 junglebook hair",
+  "kose": 4885
+ },
+ {
+  "mesh": "k64",
+  "ad": "Toigo blunt bob",
+  "kose": 1510
+ },
+ {
+  "mesh": "k65",
+  "ad": "Toigo blunt bob with bangs",
+  "kose": 2665
+ },
+ {
+  "mesh": "k66",
+  "ad": "Toigo curled under bob",
+  "kose": 1507
+ },
+ {
+  "mesh": "k67",
+  "ad": "Toigo curled under bob with bangs",
+  "kose": 2665
+ },
+ {
+  "mesh": "k68",
+  "ad": "Toigo inverted bob",
+  "kose": 1509
+ },
+ {
+  "mesh": "k69",
+  "ad": "Toigo inverted bob with bangs",
+  "kose": 2670
+ }
+]

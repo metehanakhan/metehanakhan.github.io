@@ -1032,6 +1032,20 @@ function temizCiz() {
   mekan.gizle(false);
   if (mendil) mendil.mesh.visible = !!mv;
 }
+// Mekân önizlemesi: o mekânı avatar yerindeyken (oda kaymamış, kapaklar kapalı) çizer, sonra geri döner
+function mekanCiz(ad) {
+  const eski = mekan.ad;
+  const kx = mekan.kok.position.x;
+  const mv = mendil?.mesh.visible;
+  if (mendil) mendil.mesh.visible = false;
+  if (ad !== eski) mekan.sec(ad, cur.man.beden, true);
+  mekan.kok.position.x = 0;
+  mekan.guncelle(clock.elapsedTime, 0, { dans: false });
+  renderer.render(scene, camera);
+  if (ad !== eski) mekan.sec(eski, cur.man.beden, true);
+  mekan.kok.position.x = kx;
+  if (mendil) mendil.mesh.visible = !!mv;
+}
 function shootPortrait() {
   const res = portreReq;
   portreReq = null;
@@ -1078,13 +1092,14 @@ window.addEventListener('resize', resize);
 
 // ---------------- seçenek önizlemeleri ----------------
 // Her seçenek senin avatarınla çekilir: aynı karede görünüm o seçeneğe geçer, çekilir, geri döner (titreme yok).
-const ONIZ_ODAK = { sac: 'kafa', sakal: 'cene', biyik: 'agiz', kas: 'kas', kirpik: 'goz', sapka: 'kafa', gozluk: 'yuz', ust: 'ust', alt: 'alt', tam: 'tum', ayakkabi: 'ayak' };
-const ONIZ_YAW = { sac: -0.6, sakal: -0.55, biyik: -0.4, kas: -0.25, kirpik: -0.12, sapka: -0.55, gozluk: -0.3, ust: -0.35, alt: -0.35, tam: -0.35, ayakkabi: -0.6 };
+const ONIZ_ODAK = { mekan: 'tum', sac: 'kafa', sakal: 'cene', biyik: 'agiz', kas: 'kas', kirpik: 'goz', sapka: 'kafa', gozluk: 'yuz', ust: 'ust', alt: 'alt', tam: 'tum', ayakkabi: 'ayak' };
+const ONIZ_YAW = { mekan: -0.15, sac: -0.6, sakal: -0.55, biyik: -0.4, kas: -0.25, kirpik: -0.12, sapka: -0.55, gozluk: -0.3, ust: -0.35, alt: -0.35, tam: -0.35, ayakkabi: -0.6 };
 const onizKuyruk = [];
 const onizNo = {}; // bölüm başına son istek numarası
 let kareNo = 0;
 function varyant(base, kat, id) {
   const c = { ...base, yuz: { ...base.yuz }, giysi: { ...base.giysi } };
+  if (kat === 'mekan') return c; // mekân önizlemesinde avatar olduğu gibi
   if (['sac', 'sakal', 'biyik', 'kas', 'kirpik'].includes(kat)) {
     c[kat] = id;
     return c;
@@ -1134,16 +1149,24 @@ function onizCek(is) {
     camera.updateProjectionMatrix();
     camera.position.copy(t.pos);
     camera.lookAt(t.look);
-    temizCiz();
+    if (is.kat === 'mekan') mekanCiz(is.id);
+    else temizCiz();
     const cv = renderer.domElement;
     const ch = cv.height;
     const cw = Math.min(cv.width, Math.round(ch * 0.75));
+    // Kart ekranda ~2 kat yoğunlukla gösterilir: önizleme o boyutta çekilsin ki pikselleşmesin
+    // (mekân kartları iki sütun, daha geniş; diğerleri üç sütun)
+    const [ow, oh] = is.kat === 'mekan' ? [330, 440] : [210, 280];
     const out = document.createElement('canvas');
-    out.width = 150;
-    out.height = 200;
-    out.getContext('2d').drawImage(cv, (cv.width - cw) / 2, 0, cw, ch, 0, 0, 150, 200);
-    let url = out.toDataURL('image/webp', 0.8);
-    if (!url.startsWith('data:image/webp')) url = out.toDataURL('image/jpeg', 0.82);
+    out.width = ow;
+    out.height = oh;
+    const c2 = out.getContext('2d');
+    c2.imageSmoothingEnabled = true;
+    c2.imageSmoothingQuality = 'high';
+    c2.drawImage(cv, (cv.width - cw) / 2, 0, cw, ch, 0, 0, ow, oh);
+    // Safari webp yazamaz: jpeg'e düşer
+    let url = out.toDataURL('image/webp', 0.84);
+    if (!url.startsWith('data:image/webp')) url = out.toDataURL('image/jpeg', 0.86);
     is.res(url);
   } catch (e) {
     is.res(null);
