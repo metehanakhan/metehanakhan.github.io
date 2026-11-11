@@ -10,11 +10,11 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Hohla" />
-    <meta name="theme-color" content="#0F1F26" />
+    <meta name="theme-color" content="#0B0A0E" />
     <!-- Simge: ?v= sürümü değişince tarayıcı ve iPhone eski simgeyi önbellekten getirmez. Uygulama içinde seçilen simge bunları değiştirir (lib/web-simge.ts). -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=e2" />
     <link rel="icon" type="image/png" href="/simge/simge-e-96.png?v=e2" />
-    <link rel="manifest" href="/manifest.json?v=e2" />
+    <link rel="manifest" href="/manifest.json?v=e3" />
     <meta name="google" content="notranslate" />
     <title>Hohla</title>
     <!-- The `react-native-web` recommended style reset: https://necolas.github.io/react-native-web/docs/setup/#root-element -->
@@ -23,6 +23,8 @@
       html,
       body {
         height: 100%;
+        /* İlk boyamada beyaz ya da eski mavi görünmesin: açılış sahnesinin zemini */
+        background-color: #0B0A0E;
       }
       /* These styles disable body scrolling if you are using <ScrollView> */
       body {
@@ -62,6 +64,6 @@
   <body>
     <noscript>Hohla'yı açmak için JavaScript'i etkinleştir.</noscript>
     <div id="root"></div>
-  <script src="/_expo/static/js/web/__expo-metro-runtime-9f1a7b6acd20011e290bc79f0164ae37.js" defer></script><script src="/_expo/static/js/web/__common-b0fdffc8bf259f2e879525bce6c77d1f.js" defer></script><script src="/_expo/static/js/web/index-3a60f61319d422da10b038b7e39587fc.js" defer></script>
+  <script src="/_expo/static/js/web/__expo-metro-runtime-9f1a7b6acd20011e290bc79f0164ae37.js" defer></script><script src="/_expo/static/js/web/__common-06c752c15504ba703817a955f77200db.js" defer></script><script src="/_expo/static/js/web/index-eed64b3203f4dd57e6957e897cc91ce4.js" defer></script>
 </body>
 </html>
