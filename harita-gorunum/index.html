@@ -20,6 +20,11 @@
   .pin .rozet { position: absolute; right: 2px; top: 6px; min-width: 22px; height: 22px; padding: 0 5px; box-sizing: border-box; border-radius: 11px; background: #F2A65A; color: #1A1210; font: 700 11px system-ui, sans-serif; display: none; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); }
   .pin.yolda .rozet { display: flex; }
   .pin .yuz.emoji { font-size: 32px; background: radial-gradient(circle at 50% 35%, #2C2636, #17141C); }
+  .pin .yuz.karakter, .kavus .yuz.karakter { background: none; }
+  .yuz.karakter { position: relative; }
+  .yuz.karakter svg { width: 100%; height: 100%; display: block; }
+  .yuz.karakter .rozet-resim { position: absolute; left: 10%; top: 10%; width: 80%; height: 80%; object-fit: contain; }
+  .kavus .yuz.emoji { font-size: 30px; background: radial-gradient(circle at 50% 35%, #2C2636, #17141C); }
   .pin .hal { position: absolute; left: 50%; bottom: 98px; transform: translateX(-50%); display: none; align-items: center; gap: 5px; max-width: 150px; padding: 4px 10px 4px 6px; border-radius: 16px; background: rgba(250, 246, 240, 0.96); color: #1A1210; font: 650 12px system-ui, sans-serif; white-space: nowrap; box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45); }
   .pin .hal::after { content: ''; position: absolute; left: 50%; bottom: -6px; margin-left: -6px; border: 6px solid transparent; border-bottom: 0; border-top-color: rgba(250, 246, 240, 0.96); }
   .pin .hal .he { font-size: 17px; line-height: 1; display: inline-block; animation: zipla 1.8s ease-in-out infinite; }
@@ -102,7 +107,7 @@
     s.src = kaynaklar[0];
     s.onload = function () {
       var h = document.createElement('script');
-      h.src = './harita.js?v=konum1';
+      h.src = './harita.js?v=karakter2';
       document.body.appendChild(h);
     };
     s.onerror = function () {

@@ -14,6 +14,53 @@
   // Arka plan resmi yalnızca resim verisi ya da https adresi olabilir (CSS/HTML kaçışı yok)
   const guvenliResim = (u) => (typeof u === 'string' && /^(data:image\/[a-z+.-]+;base64,[A-Za-z0-9+/=\s]+|https:\/\/[^'"()\s<>\\]+)$/i.test(u) ? u : null);
 
+  // Hazır karakter çizimi uygulamanın kendi sabit listesinden gelir; yine de yalnızca betiksiz, olaysız ve dış bağlantısız
+  // basit bir SVG kabul edilir (kayıttan ya da başka bir yerden gelen metin HTML olarak çalışamasın)
+  const guvenliSvg = (s) =>
+    typeof s === 'string' && s.length < 24000 && /^<svg[\s>]/.test(s) && !/<script|<foreignObject|<iframe|<image|\son[a-z]+\s*=|javascript:|(?:xlink:)?href\s*=/i.test(s) ? s : null;
+  // Emoji zemini: yalnızca #RRGGBB renkler
+  const renk = (c) => (typeof c === 'string' && /^#[0-9a-f]{6}$/i.test(c) ? c : null);
+  /** İğnenin yüzü: karakter, pastel zeminli emoji, portre ya da baş harf */
+  function yuzDoldur(yuz, p) {
+    const tur = p.ikon && p.ikon.tur;
+    const svg = tur === 'karakter' ? guvenliSvg(p.ikon.svg) : null;
+    const emoji = tur === 'emoji' && p.ikon.emoji ? String(p.ikon.emoji).slice(0, 16) : null;
+    yuz.classList.toggle('karakter', !!svg);
+    yuz.classList.toggle('emoji', !svg && !!emoji);
+    if (svg) {
+      // Resmî logo resmi: yalnızca bu klasördeki "ad.png" dosyaları (adres kayıttan gelmez, burada kurulur)
+      const resim = typeof p.ikon.resim === 'string' && /^[a-z0-9-]{1,40}\.png$/.test(p.ikon.resim) ? p.ikon.resim : '';
+      const anahtar = svg + '|' + resim;
+      if (yuz.dataset.svg !== anahtar) {
+        yuz.innerHTML = svg;
+        if (resim) {
+          const img = document.createElement('img');
+          img.className = 'rozet-resim';
+          img.alt = '';
+          img.src = './rozet/' + resim;
+          yuz.appendChild(img);
+        }
+      }
+      yuz.dataset.svg = anahtar;
+      yuz.style.backgroundImage = 'none';
+      return;
+    }
+    delete yuz.dataset.svg;
+    if (emoji) {
+      const z = p.ikon.zemin || [];
+      const ic = renk(z[0]);
+      const dis = renk(z[1]);
+      yuz.style.backgroundImage = ic && dis ? `radial-gradient(circle at 50% 30%, ${ic}, ${dis})` : '';
+      yuz.textContent = emoji;
+    } else if (tur !== 'harf' && p.portre) {
+      yuz.style.backgroundImage = `url("${p.portre}")`;
+      yuz.textContent = '';
+    } else {
+      yuz.style.backgroundImage = '';
+      yuz.textContent = (p.ad || '?').slice(0, 1).toLocaleUpperCase('tr');
+    }
+  }
+
   function post(type, extra) {
     const msg = Object.assign({ source: 'hohla-harita', type }, extra || {});
     if (window.ReactNativeWebView) window.ReactNativeWebView.postMessage(JSON.stringify(msg));
@@ -213,19 +260,7 @@
     return el;
   }
   function fillPin(el, p) {
-    const yuz = el.querySelector('.yuz');
-    const tur = p.ikon && p.ikon.tur;
-    yuz.classList.toggle('emoji', tur === 'emoji' && !!p.ikon.emoji);
-    if (tur === 'emoji' && p.ikon.emoji) {
-      yuz.style.backgroundImage = '';
-      yuz.textContent = p.ikon.emoji;
-    } else if (tur !== 'harf' && p.portre) {
-      yuz.style.backgroundImage = `url("${p.portre}")`;
-      yuz.textContent = '';
-    } else {
-      yuz.style.backgroundImage = '';
-      yuz.textContent = (p.ad || '?').slice(0, 1).toLocaleUpperCase('tr');
-    }
+    yuzDoldur(el.querySelector('.yuz'), p);
     // Durum balonu: "😴 Uyuyorum"; türüne göre küçük bir canlandırma
     const hal = el.querySelector('.hal');
     const anahtar = p.hal ? p.hal.emoji + '|' + p.hal.yazi : '';
@@ -403,12 +438,7 @@
         unionMarker = new maplibregl.Marker({ element: el, anchor: 'bottom' });
       }
       const els = unionMarker.getElement().querySelectorAll('.yuz');
-      [ben, o].forEach((p, i) => {
-        els[i].style.backgroundImage = p.portre ? `url("${p.portre}")` : '';
-        const emo = p.ikon && p.ikon.tur === 'emoji' && p.ikon.emoji;
-        els[i].style.backgroundImage = !emo && p.ikon?.tur !== 'harf' && p.portre ? `url("${p.portre}")` : '';
-        els[i].textContent = emo || (p.ikon?.tur !== 'harf' && p.portre ? '' : (p.ad || '?').slice(0, 1));
-      });
+      [ben, o].forEach((p, i) => yuzDoldur(els[i], p));
       unionMarker.setLngLat([(ben.lng + o.lng) / 2, (ben.lat + o.lat) / 2]).addTo(map);
     } else if (unionMarker) {
       unionMarker.remove();
