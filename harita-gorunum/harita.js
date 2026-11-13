@@ -470,7 +470,29 @@
     }
   }
 
+  // Duraklatma: sekme odakta değilken ya da uygulama arka plandayken uygulama "duraklat" yollar.
+  // Sayfanın sürekli canlandırmaları (iğne nabzı, durum balonu, kavuşma kalpleri) CSS'tedir: hepsi dondurulur.
+  // Veri güncellemeleri (set, rota, ara…) duraklamışken de işlenir; sürdürünce bir kare çizilir.
+  let durakli = false;
+  const durakStil = document.createElement('style');
+  durakStil.textContent = 'body.durakli *, body.durakli *::before, body.durakli *::after { animation-play-state: paused !important; }';
+  document.head.appendChild(durakStil);
+
   const api = {
+    duraklat(v) {
+      v = !!v;
+      if (v === durakli) return;
+      durakli = v;
+      document.body.classList.toggle('durakli', durakli);
+      if (!durakli) {
+        try {
+          map.triggerRepaint();
+          ortaGoster();
+        } catch (e) {
+          // harita daha kurulmadıysa sorun değil
+        }
+      }
+    },
     set(s) {
       if (s && s.ayar) ayarUygula(s.ayar);
       const first = !state;
@@ -564,6 +586,7 @@
     if (m.type === 'fly') api.fly(m.data);
     if (m.type === 'ara') api.ara(m.data);
     if (m.type === 'rota') api.rota(m.data);
+    if (m.type === 'duraklat') api.duraklat(m.data);
   });
   // İki iğne ekranda birbirine çok yakınsa ortadaki mesafe etiketi iğnelerin üstüne biner: gizle
   function ortaGoster() {

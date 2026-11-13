@@ -16,6 +16,8 @@
     <link rel="icon" type="image/png" href="/simge/simge-e-96.png?v=e2" />
     <link rel="manifest" href="/manifest.json?v=e3" />
     <meta name="google" content="notranslate" />
+    <!-- Çizim motoru (8 MB) uygulama kodu inip çalışmayı beklemeden, sayfayla birlikte inmeye başlasın -->
+    <link rel="preload" href="/canvaskit.wasm" as="fetch" type="application/wasm" crossorigin />
     <title>Hohla</title>
     <!-- The `react-native-web` recommended style reset: https://necolas.github.io/react-native-web/docs/setup/#root-element -->
     <style id="expo-reset">
@@ -58,12 +60,52 @@
         height: 100%;
         flex: 1;
       }
+      /* Uygulama inene kadar: siyah ekran yerine camda nefes alan küçük bir buğu. Uygulama çizilince kendiliğinden kalkar. */
+      #on-acilis {
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 18px;
+        font-family: -apple-system, system-ui, 'Segoe UI', sans-serif;
+        color: #d7e3e5;
+      }
+      #on-acilis i {
+        width: 74px;
+        height: 74px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 50% 45%, rgba(215, 227, 229, 0.34), rgba(215, 227, 229, 0.08) 58%, rgba(215, 227, 229, 0) 72%);
+        animation: on-nefes 2.6s ease-in-out infinite;
+      }
+      #on-acilis span {
+        font-size: 15px;
+        font-weight: 300;
+        letter-spacing: 0.34em;
+        padding-left: 0.34em;
+        opacity: 0.55;
+      }
+      @keyframes on-nefes {
+        0%,
+        100% {
+          transform: scale(0.82);
+          opacity: 0.45;
+        }
+        50% {
+          transform: scale(1.12);
+          opacity: 1;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #on-acilis i {
+          animation: none;
+        }
+      }
     </style>
   </head>
 
   <body>
     <noscript>Hohla'yı açmak için JavaScript'i etkinleştir.</noscript>
-    <div id="root"></div>
-  <script src="/_expo/static/js/web/__expo-metro-runtime-9f1a7b6acd20011e290bc79f0164ae37.js" defer></script><script src="/_expo/static/js/web/__common-2dcca0b45bfab757269a74c563cbcddf.js" defer></script><script src="/_expo/static/js/web/index-7066ea92dc28de9c23e06feb25b071fe.js" defer></script>
+    <div id="root"><div id="on-acilis" aria-hidden="true"><i></i><span>hohla</span></div></div>
+  <script src="/_expo/static/js/web/__expo-metro-runtime-9f1a7b6acd20011e290bc79f0164ae37.js" defer></script><script src="/_expo/static/js/web/__common-884878ed48758c17e77596de6b89a2bd.js" defer></script><script src="/_expo/static/js/web/index-2240822b9b8adb9119f4a1d5dea4b77e.js" defer></script>
 </body>
 </html>

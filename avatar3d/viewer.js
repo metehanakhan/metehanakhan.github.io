@@ -1630,7 +1630,25 @@ function animate(t, dt) {
 const clock = new THREE.Clock();
 // Test sayfası (?cek): pencere gizliyken de çizsin diye zamanlayıcıyla döner (uygulamada her zaman rAF)
 const kare = q.has('cek') ? (f) => setTimeout(f, 16) : requestAnimationFrame;
+// Duraklatma: sekme odakta değilken ya da uygulama arka plandayken uygulama "duraklat" yollar; çizim durur.
+// Bekleyen portre/önizleme isteği varsa döngü o iş bitene kadar çalışır, sonra yeniden durur.
+let durakli = false;
+let donuyor = false; // sıraya konmuş bir kare var mı (iki döngü aynı anda koşmasın)
+const bekleyenIs = () => !!portreReq || onizKuyruk.length > 0;
+function donguBaslat() {
+  if (donuyor) return;
+  donuyor = true;
+  // Dururken biriken süre atılır: ne adım (dt) ne de canlandırma saati (elapsedTime) sıçrasın
+  const gecen = clock.elapsedTime;
+  clock.getDelta();
+  clock.elapsedTime = gecen;
+  kare(loop);
+}
 function loop() {
+  if (durakli && !bekleyenIs()) {
+    donuyor = false;
+    return;
+  }
   kare(loop);
   const dt = Math.min(0.05, clock.getDelta());
   const t = clock.elapsedTime;
@@ -1688,7 +1706,15 @@ const api = {
   yaw: (y) => (spin.target = y),
   portrait: async () => {
     await dokuHazir;
-    return new Promise((res) => (portreReq = res));
+    return new Promise((res) => {
+      portreReq = res;
+      donguBaslat(); // duraklamışken de çekilsin
+    });
+  },
+  // Görünmüyorken çizimi durdur (true) / sürdür (false)
+  duraklat: (v) => {
+    durakli = !!v;
+    if (!durakli) donguBaslat();
   },
   defaults: async (beden) => defaults((await loadSet(beden)).man),
   onizle: async ({ kat, ids }) => {
@@ -1724,6 +1750,7 @@ const api = {
         continue;
       }
       sozler.push(new Promise((res) => onizKuyruk.push({ kat, id, res, no, beden: cur.man.beden })));
+      donguBaslat(); // duraklamışken de çekilsin
     }
     const list = await Promise.all(sozler);
     return Object.fromEntries(ids.map((id, i) => [id ?? '__yok', list[i]]));
@@ -1754,13 +1781,14 @@ window.addEventListener('message', async (e) => {
   if (m.type === 'dance') api.dance(m.data);
   if (m.type === 'sahne') api.sahne(m.data);
   if (m.type === 'yaw') api.yaw(m.data);
+  if (m.type === 'duraklat') api.duraklat(m.data);
   if (m.type === 'portre') post('portre', { data: await api.portrait() });
   if (m.type === 'manifest') post('manifest', { data: await api.manifest(m.data) });
   if (m.type === 'onizle') post('onizleme', { istek: m.data.istek, data: await api.onizle(m.data) });
 });
 
 resize();
-loop();
+donguBaslat();
 const first = q.get('cfg');
 const ilkBeden = q.get('b') === 'erkek' ? 'erkek' : 'kadin';
 if (first) api.set(JSON.parse(first));
