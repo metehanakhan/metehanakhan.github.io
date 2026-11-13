@@ -161,6 +161,10 @@
     map.addSource('yerler', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
     map.addLayer({ id: 'yer-dolgu', type: 'fill', source: 'yerler', paint: { 'fill-color': ['get', 'renk'], 'fill-opacity': ['case', ['get', 'icerde'], 0.22, 0.1] } });
     map.addLayer({ id: 'yer-kenar', type: 'line', source: 'yerler', paint: { 'line-color': ['get', 'renk'], 'line-width': 1.5, 'line-opacity': 0.8, 'line-dasharray': [2, 2] } });
+    // Konum belirsizliği: ölçüm kabaysa (ya da sis perdesi açıksa) iğnenin çevresinde yumuşak çember
+    map.addSource('dogruluk', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
+    map.addLayer({ id: 'dogruluk-dolgu', type: 'fill', source: 'dogruluk', paint: { 'fill-color': ['get', 'renk'], 'fill-opacity': 0.12 } });
+    map.addLayer({ id: 'dogruluk-kenar', type: 'line', source: 'dogruluk', paint: { 'line-color': ['get', 'renk'], 'line-width': 1.2, 'line-opacity': 0.55 } });
     // Seçim önizlemesi
     map.addSource('secim', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
     map.addLayer({ id: 'secim-dolgu', type: 'fill', source: 'secim', paint: { 'fill-color': '#F2A65A', 'fill-opacity': 0.18 } });
@@ -364,6 +368,17 @@
     const ben = state.ben && state.ben.lat != null ? state.ben : null;
     const o = state.o && state.o.lat != null ? state.o : null;
     const together = ben && o && km(ben, o) < 0.15;
+    // Belirsizlik çemberi: 30 m'den dar ölçümde çizilmez (iğnenin altında kalır), 5 km'den geniş çizilmez
+    const belirsiz = [];
+    for (const [p, renk] of [[ben, BEN], [o, O]]) {
+      const r = p && Number(p.dogruluk);
+      if (p && r > 30) {
+        const f = circle(p.lng, p.lat, Math.min(r, 5000));
+        f.properties = { renk };
+        belirsiz.push(f);
+      }
+    }
+    map.getSource('dogruluk').setData({ type: 'FeatureCollection', features: belirsiz });
     for (const [kim, color] of list) {
       const p = kim === 'ben' ? ben : o;
       if (!p || together) {
