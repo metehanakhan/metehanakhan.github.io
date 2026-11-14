@@ -1399,9 +1399,19 @@ renderer.domElement.addEventListener('pointermove', (e) => {
   const dx = e.clientX - spin.lx;
   spin.lx = e.clientX;
   spin.target += dx * 0.012;
-  spin.vel = dx * 0.012;
+  // Bırakınca savrulma: tek bir sert hareket avatarı tur attırmasın
+  spin.vel = Math.max(-0.12, Math.min(0.12, dx * 0.012));
 });
-const endDrag = () => (spin.drag = false);
+// Bırakıldıktan sonra avatar bir süre o açıda kalır, sonra yumuşakça öne (bölümün açısına) döner.
+// Önceden bırakıldığı açıda kalıyordu; hızlı bir kaydırmadan sonra yan dönük "yaslanmış" duruyordu (2026-11-14).
+let birakAn = 0;
+let doneBekliyor = false;
+const endDrag = () => {
+  if (!spin.drag) return;
+  spin.drag = false;
+  birakAn = performance.now();
+  doneBekliyor = true;
+};
 renderer.domElement.addEventListener('pointerup', endDrag);
 renderer.domElement.addEventListener('pointercancel', endDrag);
 
@@ -1887,8 +1897,16 @@ function loop() {
   const dt = Math.min(0.05, clock.getDelta());
   const t = clock.elapsedTime;
   if (!spin.drag) {
-    spin.target += spin.vel;
+    // Savrulma zamana bağlı (60 kare/sn'ye göre): 120 Hz ekranda iki kat savrulmasın
+    spin.target += spin.vel * dt * 60;
     spin.vel *= Math.pow(0.04, dt);
+    if (Math.abs(spin.vel) < 0.002) spin.vel = 0;
+    if (doneBekliyor && !spin.vel && performance.now() - birakAn > 1800) {
+      doneBekliyor = false;
+      const ev = ODAK[focus]?.yaw ?? -0.3;
+      const tam = Math.PI * 2;
+      spin.target = ev + tam * Math.round((spin.target - ev) / tam);
+    }
   }
   spin.yaw += (spin.target - spin.yaw) * Math.min(1, dt * 12);
   if (cur) {
