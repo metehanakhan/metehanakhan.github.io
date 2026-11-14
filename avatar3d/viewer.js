@@ -286,10 +286,13 @@ function prepare(man, root) {
     rotWorld(b, new Q().setFromUnitVectors(c.sub(a).normalize(), dir.normalize()));
   };
   if (!q.has('ham')) {
-  aim(B.upperarm_l, B.lowerarm_l, new V3(0.2, -1, 0.02));
-  aim(B.upperarm_r, B.lowerarm_r, new V3(-0.2, -1, 0.02));
-  aim(B.lowerarm_l, B.hand_l, new V3(0.08, -1, 0.18));
-  aim(B.lowerarm_r, B.hand_r, new V3(-0.08, -1, 0.18));
+    const d = durusSec(man.beden, q.get('durus'));
+    if (d === 'eski') {
+      aim(B.upperarm_l, B.lowerarm_l, new V3(0.2, -1, 0.02));
+      aim(B.upperarm_r, B.lowerarm_r, new V3(-0.2, -1, 0.02));
+      aim(B.lowerarm_l, B.hand_l, new V3(0.08, -1, 0.18));
+      aim(B.lowerarm_r, B.hand_r, new V3(-0.08, -1, 0.18));
+    } else durusUygula(root, B, d);
   }
   for (const n of names) if (B[n]) rest.set(n, { q: B[n].quaternion.clone(), p: B[n].position.clone() });
 
@@ -478,6 +481,213 @@ if (uOmbre > 0.5) {
 }`);
   };
   mt.customProgramCacheKey = () => (katmanli ? 'hohla-ombre-katman' : 'hohla-ombre');
+}
+
+// ---------------- dinlenme duruşu ----------------
+// Kemikler model uzayında (yüz +z, karakterin solu +x) döndürülür. s: ağırlığın bindiği bacak (+1 sol, -1 sağ, 0 ikisi).
+// Kollarda x "dışarı" demektir (sol kolda +x, sağda -x olarak çevrilir). el: elin gideceği nokta (kalça kemiğine göre).
+const DURUSLAR = {
+  kadin: {
+    // zarif: ağırlık sağ bacakta, sol diz içe bükük, sol ayak önde ve topuk kalkık; omuzlar gevşek
+    zarif: {
+      s: -1, kalca: 0.07, egim: 0.12, don: 0.14, bel: [0.09, 0.09], gogus: -0.03, omuzGeri: 0.07, omuzDus: 0.05, bas: [0.08, 0.1],
+      ayak: { genis: -0.05, agirlik: [0.02, 0], serbest: [0.06, 0.1], ac: 0.4, topuk: 0.3, diz: 0.3 },
+      kol: { ag: { ust: [0.15, -1, 0.05], alt: [0.04, -1, 0.2], bilek: [-0.1, -1, 0.08] }, sb: { ust: [0.14, -1, 0.1], alt: [0.04, -1, 0.3], bilek: [-0.1, -1, 0.12] } },
+      parmak: 0.15,
+      avuc: [0.25, 0, -1], // kadın iskeletinde avuç yönü erkeğin tersine ölçüldü
+    },
+    // rahat: ağırlık sol bacakta, daha hafif; kollar yanda serbest
+    rahat: {
+      s: 1, kalca: 0.05, egim: 0.08, don: 0.08, bel: [0.055, 0.055], gogus: -0.025, omuzGeri: 0.06, omuzDus: 0.05, bas: [-0.06, -0.08],
+      ayak: { genis: -0.04, agirlik: [0.01, 0], serbest: [0.045, 0.07], ac: 0.38, topuk: 0.2, diz: 0.3 },
+      kol: { ag: { ust: [0.17, -1, 0.02], alt: [0.08, -1, 0.16], bilek: [-0.1, -1, 0.08] }, sb: { ust: [0.16, -1, 0.07], alt: [0.07, -1, 0.24], bilek: [-0.1, -1, 0.1] } },
+      parmak: 0.15,
+      avuc: [0.25, 0, -1], // kadın iskeletinde avuç yönü erkeğin tersine ölçüldü
+    },
+    // belde: ağırlık sağda, sağ el kalçada (dirsek dışarı), sol kol serbest
+    belde: {
+      s: -1, kalca: 0.07, egim: 0.12, don: 0.14, bel: [0.09, 0.09], gogus: -0.03, omuzGeri: 0.07, omuzDus: 0.05, bas: [0.09, -0.1],
+      ayak: { genis: -0.05, agirlik: [0.02, 0], serbest: [0.06, 0.1], ac: 0.4, topuk: 0.3, diz: 0.3 },
+      kol: { ag: { el: [0.06, 0.12, 0.0], dirsek: [1, 0, -0.55], bilek: [0.1, -1, 0.6] }, sb: { ust: [0.14, -1, 0.08], alt: [0.04, -1, 0.26], bilek: [-0.1, -1, 0.12] } },
+      parmak: 0.15,
+      avuc: [0.25, 0, -1], // kadın iskeletinde avuç yönü erkeğin tersine ölçüldü
+    },
+  },
+  erkek: {
+    // dik: ayaklar omuz genişliğinde, göğüs açık, omuzlar geride, kollar gövdeden biraz uzak
+    dik: {
+      s: 0, kalca: 0, egim: 0, don: 0, bel: [0, 0], gogus: -0.07, omuzGeri: 0.12, omuzDus: 0.02, bas: [0, 0],
+      ayak: { genis: -0.075, ac: 0.2 },
+      kol: { ag: { ust: [0.22, -1, 0.0], alt: [0.1, -1, 0.18], bilek: [-0.2, -1, 0.05] }, sb: { ust: [0.22, -1, 0.0], alt: [0.1, -1, 0.18], bilek: [-0.2, -1, 0.05] } },
+      parmak: 0.15,
+    },
+    // rahat: ağırlık hafif sol bacakta, sağ ayak dışa açık, kollar serbest
+    rahat: {
+      s: 1, kalca: 0.035, egim: 0.04, don: 0.08, bel: [0.025, 0.025], gogus: -0.04, omuzGeri: 0.08, omuzDus: 0.03, bas: [-0.03, -0.1],
+      ayak: { genis: -0.06, agirlik: [0, 0], serbest: [-0.04, 0.07], ac: 0.35, topuk: 0.06, diz: 0.1 },
+      kol: { ag: { ust: [0.22, -1, 0.02], alt: [0.1, -1, 0.2], bilek: [-0.2, -1, 0.05] }, sb: { ust: [0.2, -1, 0.08], alt: [0.08, -1, 0.3], bilek: [-0.2, -1, 0.08] } },
+      parmak: 0.2,
+    },
+    // önde: eller kasığın önünde gevşekçe birleşir
+    onde: {
+      s: 0, kalca: 0, egim: 0, don: 0, bel: [0, 0], gogus: -0.06, omuzGeri: 0.08, omuzDus: 0.03, bas: [0, 0],
+      ayak: { genis: -0.06, ac: 0.22 },
+      kol: { ag: { el: [-0.11, -0.12, 0.19], dirsek: [1, 0, -0.15], bilek: [-0.35, -1, 0.25] }, sb: { el: [-0.07, -0.17, 0.17], dirsek: [1, 0, -0.15], bilek: [-0.35, -1, 0.25] } },
+      parmak: 0.25,
+    },
+  },
+};
+// Metehan'ın seçimi (2026-11-14): kadında zarif, erkekte dik. ?durus=eski eski kol duruşunu verir.
+const DURUS_VARSAYILAN = { kadin: 'zarif', erkek: 'dik' };
+function durusSec(beden, ad) {
+  const t = DURUSLAR[beden] || {};
+  const a = ad && (ad === 'eski' || t[ad]) ? ad : DURUS_VARSAYILAN[beden] || 'eski';
+  return a === 'eski' ? 'eski' : t[a];
+}
+function durusUygula(root, B, d) {
+  const wp = (b) => new V3().setFromMatrixPosition(b.matrixWorld);
+  const wq = (b) => b.getWorldQuaternion(new Q());
+  const don = (b, eks, ang) => b && ang && rotWorld(b, new Q().setFromAxisAngle(eks, ang));
+  const X = new V3(1, 0, 0), Y = new V3(0, 1, 0), Z = new V3(0, 0, 1);
+  const hedefe = (b, child, nokta) => {
+    const a = wp(b);
+    rotWorld(b, new Q().setFromUnitVectors(wp(child).sub(a).normalize(), nokta.clone().sub(a).normalize()));
+  };
+  const dogrult = (b, child, dir) => hedefe(b, child, wp(b).add(dir));
+  const dunyaQ = (b, w) => {
+    b.quaternion.copy(wq(b.parent).invert().multiply(w));
+    b.updateMatrixWorld(true);
+  };
+  // iki kemikli zincir: üst kemik, alt kemik, uç; uç hedef noktaya, diz/dirsek "kutup" yönüne bakar
+  const zincir = (u, a, uc, T, kutup) => {
+    const H = wp(u);
+    const la = H.distanceTo(wp(a));
+    const lb = wp(a).distanceTo(wp(uc));
+    const dir = T.clone().sub(H);
+    const dd = Math.min(dir.length(), (la + lb) * 0.999);
+    dir.normalize();
+    const cos = Math.max(-1, Math.min(1, (la * la + dd * dd - lb * lb) / (2 * la * dd)));
+    const sin = Math.sqrt(1 - cos * cos);
+    const p = kutup.clone().sub(dir.clone().multiplyScalar(kutup.dot(dir))).normalize();
+    const K = H.clone().add(dir.clone().multiplyScalar(la * cos)).add(p.multiplyScalar(la * sin));
+    hedefe(u, a, K);
+    hedefe(a, uc, H.clone().add(dir.multiplyScalar(dd)));
+  };
+  root.updateMatrixWorld(true);
+  const s = d.s;
+  // ayakların ilk yeri ve yönü (yere basan nokta korunur)
+  const ayak = {};
+  for (const y of ['l', 'r']) {
+    const f = B['foot_' + y];
+    const top = root.getObjectByName('ball_' + y);
+    ayak[y] = { p: wp(f), q: wq(f), top, topY: top ? wp(top).y : null };
+  }
+  // kalça: ağırlık bacağına kayar, o taraf yükselir, serbest kalça öne döner
+  const pel = B.pelvis;
+  const pw = wp(pel).add(new V3(s * d.kalca, 0, 0));
+  pel.position.copy(pel.parent.worldToLocal(pw));
+  pel.updateMatrixWorld(true);
+  don(pel, Z, s * d.egim);
+  don(pel, Y, s * d.don);
+  // bel ters yöne: omuzlar kalçanın tersine eğilir, göğüs öne bakar
+  don(B.spine_01, Z, -s * d.bel[0]);
+  don(B.spine_02, Z, -s * d.bel[1]);
+  don(B.spine_02, Y, -s * d.don * 0.8);
+  don(B.spine_03, X, d.gogus);
+  // omuzlar geride ve gevşek
+  don(B.clavicle_l, Y, d.omuzGeri);
+  don(B.clavicle_r, Y, -d.omuzGeri);
+  don(B.clavicle_l, Z, -d.omuzDus);
+  don(B.clavicle_r, Z, d.omuzDus);
+  // baş: kalça/omuz eğiminin bir kısmını toplar, üstüne hafif yana yatma ve dönüş
+  don(B.neck_01, Z, s * (d.bel[0] + d.bel[1] - d.egim) * 0.6);
+  don(B.head, Z, d.bas[0]);
+  don(B.head, Y, d.bas[1]);
+  // bacaklar: ayak hedefleri, sonra iki kemikli çözüm (yetişmezse kalça biraz iner)
+  const A = d.ayak || {};
+  const yanS = { l: 1, r: -1 };
+  const hedef = {};
+  for (const y of ['l', 'r']) {
+    const agirlik = s ? yanS[y] === s : false;
+    const serbest = s ? !agirlik : false;
+    const o = (agirlik ? A.agirlik : serbest ? A.serbest : null) || [0, 0];
+    hedef[y] = { T: ayak[y].p.clone().add(new V3(yanS[y] * ((A.genis || 0) - o[0]), 0, o[1])), serbest, agirlik };
+  }
+  let in_ = 0;
+  for (const y of ['l', 'r']) {
+    const H = wp(B['thigh_' + y]);
+    const L = wp(B['thigh_' + y]).distanceTo(wp(B['calf_' + y])) + wp(B['calf_' + y]).distanceTo(wp(B['foot_' + y]));
+    const fazla = H.distanceTo(hedef[y].T) - L * 0.997;
+    if (fazla > in_) in_ = fazla;
+  }
+  if (in_ > 0) {
+    pel.position.copy(pel.parent.worldToLocal(wp(pel).add(new V3(0, -in_, 0))));
+    pel.updateMatrixWorld(true);
+  }
+  for (const y of ['l', 'r']) {
+    const h = hedef[y];
+    const th = B['thigh_' + y], ca = B['calf_' + y], ft = B['foot_' + y];
+    const kutup = new V3(h.serbest ? -yanS[y] * (A.diz || 0) : 0, 0, 1);
+    const yon = new Q().setFromAxisAngle(Y, yanS[y] * (A.ac || 0) * (h.agirlik ? 0.5 : 1));
+    const topuk = h.serbest ? A.topuk || 0 : 0;
+    const coz = () => {
+      zincir(th, ca, ft, h.T, kutup);
+      const w = yon.clone().multiply(ayak[y].q);
+      dunyaQ(ft, topuk ? new Q().setFromAxisAngle(X, topuk).multiply(w) : w);
+    };
+    coz();
+    // topuk kalkınca ayak ucu yere değsin
+    if (ayak[y].top && topuk) {
+      h.T.y += ayak[y].topY - wp(ayak[y].top).y;
+      coz();
+    }
+  }
+  // kollar
+  for (const [y, k] of [['l', s === -1 ? 'sb' : 'ag'], ['r', s === -1 ? 'ag' : 'sb']]) {
+    const kd = d.kol[k];
+    const x = yanS[y];
+    const ua = B['upperarm_' + y], la = B['lowerarm_' + y], el = B['hand_' + y];
+    if (kd.el) {
+      const T = wp(B['thigh_' + y]).add(new V3(x * kd.el[0], kd.el[1], kd.el[2]));
+      zincir(ua, la, el, T, new V3(x * kd.dirsek[0], kd.dirsek[1], kd.dirsek[2]));
+    } else {
+      dogrult(ua, la, new V3(x * kd.ust[0], kd.ust[1], kd.ust[2]));
+      dogrult(la, el, new V3(x * kd.alt[0], kd.alt[1], kd.alt[2]));
+    }
+    // bilek: el parmak yönüne (orta parmak kökü) çevrilir; kol açısından gelen yamukluk gider
+    const orta = root.getObjectByName('middle_01_' + y);
+    const bk = kd.bilek || [0, -1, 0.12];
+    if (orta) dogrult(el, orta, new V3(x * bk[0], bk[1], bk[2]));
+    // avuç: işaret→serçe kökü bu yöne bakacak kadar el kendi ekseninde döner (avuç içi bacağa dönük)
+    const ib = root.getObjectByName('index_01_' + y);
+    const pb = root.getObjectByName('pinky_01_' + y);
+    if (orta && ib && pb && kd.avuc !== null && !kd.el) {
+      const av = kd.avuc || d.avuc || [0.4, 0, 1];
+      const fa = wp(orta).sub(wp(el)).normalize();
+      const v = wp(pb).sub(wp(ib));
+      const h = new V3(x * av[0], av[1], av[2]);
+      v.sub(fa.clone().multiplyScalar(v.dot(fa))).normalize();
+      h.sub(fa.clone().multiplyScalar(h.dot(fa))).normalize();
+      rotWorld(el, new Q().setFromUnitVectors(v, h));
+    }
+  }
+  // parmaklar gevşekçe kıvrık (dümdüz açık el cansız duruyordu)
+  if (d.parmak) {
+    for (const y of ['l', 'r']) {
+      const ib = root.getObjectByName('index_01_' + y);
+      const pb = root.getObjectByName('pinky_01_' + y);
+      if (!ib || !pb) continue;
+      const eks = wp(pb).sub(wp(ib)).normalize();
+      const yon = y === 'r' ? KAVRA : -KAVRA;
+      for (const f of ['index', 'middle', 'ring', 'pinky', 'thumb'])
+        for (const n of ['01', '02', '03']) {
+          const b = root.getObjectByName(`${f}_${n}_${y}`);
+          if (!b) continue;
+          const kat = f === 'thumb' ? (n === '01' ? 0 : 0.35) : (n === '01' ? 0.5 : 1) * (0.8 + 0.12 * PARMAK.indexOf(f));
+          don(b, eks, d.parmak * kat * yon);
+        }
+    }
+  }
 }
 
 function rotWorld(b, q) {
@@ -1644,12 +1854,36 @@ function donguBaslat() {
   clock.elapsedTime = gecen;
   kare(loop);
 }
+// Isınma (2026-11-14): telefonun ekranı 120 Hz; sahne saniyede 120 kez tam çözünürlükte çiziliyordu ve
+// telefon ısınıyordu. Görüntü aynı kalır, yalnız kare sayısı sınırlanır: hareket varken (dans, döndürme,
+// yürüyüş, kamera geçişi, yükleme) 60, avatar sakin dururken (yalnız nefes ve göz kırpma) 30 kare/sn.
+let sonCizim = 0;
+let kamOynuyor = true;
+let sakinSay = 0;
+const hareketVar = () =>
+  !!dans ||
+  spin.drag ||
+  Math.abs(spin.vel) > 1e-4 ||
+  Math.abs(spin.target - spin.yaw) > 1e-3 ||
+  gez.hareket ||
+  gez.v > 1e-3 ||
+  Math.abs(gez.w) > 1e-3 ||
+  kamOynuyor ||
+  dansW > 1e-3 ||
+  bekleyenIs() ||
+  !cur;
 function loop() {
   if (durakli && !bekleyenIs()) {
     donuyor = false;
     return;
   }
   kare(loop);
+  const simdi = performance.now();
+  // Hareket bittikten sonra 1 sn daha 60 karede kalır (yavaşlarken takılma hissi olmasın)
+  sakinSay = hareketVar() ? 0 : sakinSay + 1;
+  const aralik = sakinSay > 60 ? 1000 / 30 : 1000 / 60;
+  if (simdi - sonCizim < aralik - 3) return;
+  sonCizim = simdi;
   const dt = Math.min(0.05, clock.getDelta());
   const t = clock.elapsedTime;
   if (!spin.drag) {
@@ -1664,6 +1898,7 @@ function loop() {
     if (!q.has('ham')) animate(t, dt);
     const c = camTarget();
     const k = Math.min(1, dt * 4.5);
+    kamOynuyor = camNow.pos.distanceToSquared(c.pos) > 1e-6 || camNow.look.distanceToSquared(c.look) > 1e-6;
     camNow.pos.lerp(c.pos, k);
     camNow.look.lerp(c.look, k);
     camera.position.copy(camNow.pos);
