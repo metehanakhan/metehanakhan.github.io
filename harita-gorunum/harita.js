@@ -67,17 +67,32 @@
     else if (window.parent && window.parent !== window) window.parent.postMessage(msg, '*');
   }
 
-  const map = new maplibregl.Map({
-    container: 'map',
-    style: STYLE,
-    center: [29.0, 41.02],
-    zoom: 11,
-    pitch: 45,
-    bearing: -12,
-    attributionControl: false,
-    dragRotate: true,
-    pitchWithRotate: true,
-    maxPitch: 70,
+  // WebGL yoksa (eski cihaz, kapalı donanım hızlandırma, düşük güç modu) MapLibre kurulurken hata atar:
+  // eskiden bu sessizce yutuluyor, uygulama 45 sn "Harita hazırlanıyor" diyordu. Artık nedeniyle bildirilir.
+  let map;
+  try {
+    map = new maplibregl.Map({
+      container: 'map',
+      style: STYLE,
+      center: [29.0, 41.02],
+      zoom: 11,
+      pitch: 45,
+      bearing: -12,
+      attributionControl: false,
+      dragRotate: true,
+      pitchWithRotate: true,
+      maxPitch: 70,
+    });
+  } catch (e) {
+    post('hata', { neden: /webgl/i.test(String(e && e.message)) || !window.WebGLRenderingContext ? 'webgl' : 'ag', mesaj: String(e && e.message).slice(0, 200) });
+    throw e;
+  }
+  // iPhone arka plandan dönünce ya da bellek sıkışınca çizim bağlamı kaybolabilir: harita siyah kalırdı.
+  // Uygulama bunu duyunca haritayı yeniden kurar.
+  map.getCanvas().addEventListener('webglcontextlost', () => post('hata', { neden: 'baglam' }), { once: true });
+  // Stil (koyu harita) inmezse hazır olmadan hata: ağ sorunu
+  map.on('error', (e) => {
+    if (!ready && e && e.error && /style|Failed to fetch|NetworkError|Load failed/i.test(String(e.error.message))) post('hata', { neden: 'ag', mesaj: String(e.error.message).slice(0, 200) });
   });
   document.documentElement.style.setProperty('--alt', alt + 'px');
 
