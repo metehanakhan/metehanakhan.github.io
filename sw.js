@@ -121,6 +121,12 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(onceAg(istek, '/', 4000));
     return;
   }
+  // Çizim motoru (canvaskit.wasm, 8 MB, adında özet yok): önce ağ, ama ağ 3 sn'de cevap vermezse son iyi kopya.
+  // Eskiden zaman aşımı yoktu: zayıf ağda (metro) açılış bu dosyayı bekleyip asılı kalıyordu.
+  if (url.pathname === '/canvaskit.wasm') {
+    event.respondWith(onceAg(istek, null, 3000));
+    return;
+  }
   // Sürüm numaralı varlıklar (avatar ?v=55 gibi): adres değişmedikçe içerik de değişmez
   const surumlu = /(^|&)v=/.test(url.search.slice(1));
   event.respondWith(ozetli(url.pathname) || surumlu ? onceOnbellek(istek) : onceAg(istek));
